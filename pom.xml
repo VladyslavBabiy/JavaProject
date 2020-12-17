@@ -58,7 +58,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <port>8088</port>
+                    <port>8085</port>
                     <path>/api</path>
                 </configuration>
             </plugin>
