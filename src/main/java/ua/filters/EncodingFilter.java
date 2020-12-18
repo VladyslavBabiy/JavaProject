@@ -1,4 +1,4 @@
-package ua.training.controller.filters;
+package ua.filters;
 
 
 import javax.servlet.*;

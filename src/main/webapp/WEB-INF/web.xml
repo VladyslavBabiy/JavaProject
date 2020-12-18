@@ -3,11 +3,11 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <servlet>
-    <servlet-name>ServletName</servlet-name>
-    <servlet-class>ua.training.controller.Servlet</servlet-class>
+    <servlet-name>MainServlet</servlet-name>
+    <servlet-class>ua.Servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ServletName</servlet-name>
+    <servlet-name>MainServlet</servlet-name>
     <url-pattern>/app/*</url-pattern>
   </servlet-mapping>
 
@@ -17,13 +17,29 @@
 
   <filter>
   <filter-name>EncodingFilter</filter-name>
-  <filter-class>ua.training.controller.filters.EncodingFilter</filter-class>
+  <filter-class>ua.filters.EncodingFilter</filter-class>
 </filter>
   <filter-mapping>
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+<!--  <filter>-->
+<!--    <filter-name>AuthFilter</filter-name>-->
+<!--    <filter-class>ua.hotelServlet.filters.AuthFilter</filter-class>-->
+<!--  </filter>-->
+  <filter>
+    <filter-name>SessionLocaleFilter</filter-name>
+    <filter-class>ua.filters.SessionLocaleFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SessionLocaleFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
+<!--  <filter-mapping>-->
+<!--    <filter-name>AuthFilter</filter-name>-->
+<!--    <url-pattern>/</url-pattern>-->
+<!--  </filter-mapping>-->
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
     <location>/WEB-INF/error.jsp</location>

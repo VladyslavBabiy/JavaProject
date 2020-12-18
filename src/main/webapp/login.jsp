@@ -17,7 +17,7 @@
             <form method="post" action="">
 
                 <input type="text" required placeholder=<fmt:message key="form.email"/> name="login"><br>
-                <input type="password" required placeholder=<fmt:message key="form.password"/> name="password"><br><br>
+                <input type="password" required placeholder=<fmt:message key="form.password"/> name="password"><br>
                 <input class="button" type="submit" value=<fmt:message key="actions.login"/>>
 
             </form>

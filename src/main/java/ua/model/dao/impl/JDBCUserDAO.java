@@ -8,6 +8,7 @@ import ua.model.entity.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCUserDAO implements UserDAO {
     UserMapper userMapper;
@@ -21,8 +22,8 @@ public class JDBCUserDAO implements UserDAO {
     public void add(User user) throws SQLException {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO USER(LOGIN,PASSWORD,ROLE,EMAIL,ID)value (?,?,?,?,?)");
-            preparedStatementSet(user,preparedStatement);
+            preparedStatement = connection.prepareStatement("INSERT INTO user(LOGIN,PASSWORD,ROLE,EMAIL,ID)value (?,?,?,?,DEFAULT)");
+            preparedStatementSet(user,preparedStatement,true);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,7 +97,7 @@ public class JDBCUserDAO implements UserDAO {
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatementSet(user, preparedStatement);
+            preparedStatementSet(user, preparedStatement,false);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -131,12 +132,51 @@ public class JDBCUserDAO implements UserDAO {
         }
     }
 
-    private void preparedStatementSet(User user, PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, user.getLogin());
-        preparedStatement.setString(2, user.getPassword());
-        preparedStatement.setString(3, String.valueOf(user.getRole()));
-        preparedStatement.setString(4, user.getEmail());
-        preparedStatement.setLong(5, user.getId());
+    @Override
+    public User findByLogin(String login) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        User user = new User();
+        try {
+            preparedStatement = connection.prepareStatement("SELECT LOGIN, PASSWORD, ROLE, EMAIL,ID FROM user WHERE LOGIN=?");
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+            {
+                user.setLogin(resultSet.getString("LOGIN"));
+                user.setPassword(resultSet.getString("PASSWORD"));
+                user.setRole(User.Role.valueOf(resultSet.getString("ROLE")));
+                user.setEmail(resultSet.getString("EMAIL"));
+                user.setId(resultSet.getLong("ID"));
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return user;
+    }
+
+    private void preparedStatementSet(User user, PreparedStatement preparedStatement,boolean add) throws SQLException {
+        if (!add){
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, String.valueOf(user.getRole()));
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setLong(5,  user.getId());
+        }
+        else {
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, String.valueOf(user.getRole()));
+            preparedStatement.setString(4, user.getEmail());
+        }
     }
 
     public void setConnection(Connection connection) {

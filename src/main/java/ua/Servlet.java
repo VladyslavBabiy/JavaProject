@@ -5,7 +5,6 @@ import ua.command.Exception;
 import ua.command.LogOut;
 import ua.command.Login;
 import ua.command.Registration;
-import ua.training.controller.command.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;

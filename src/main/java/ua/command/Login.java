@@ -19,19 +19,18 @@ public class Login implements Command {
         final String password = request.getParameter("password");
         final UserService userService = new UserService();
         final HttpSession session = request.getSession();
+        User user = userService.findByLogin(login);
+        System.out.println(user);
         if (nonNull(session) &&
                 nonNull(session.getAttribute("login")) &&
                 nonNull(session.getAttribute("password"))) {
 
             final User.Role role = (User.Role) session.getAttribute("role");
             return moveToMenu(request, role);
-        } else if (userService.getAllUser().stream().anyMatch(x -> x.getLogin().equals(login) && x.getPassword().equals(password))) {
-            final User.Role role = userService.getAllUser()
-                    .stream()
-                    .filter(x -> x.getLogin().equals(login) && x.getPassword().equals(password))
-                    .findFirst()
-                    .get()
-                    .getRole();
+        } else if (nonNull(user.getLogin())&&nonNull(user.getPassword())
+                &&user.getPassword().equals(password)&&user.getLogin().equals(login))
+        {
+            final User.Role role = user.getRole();
             request.getSession().setAttribute("password", password);
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", role);

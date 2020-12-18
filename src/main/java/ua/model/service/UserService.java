@@ -16,8 +16,8 @@ public class UserService {
             return dao.geAll();
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     public void addUser(User user)
@@ -47,6 +47,16 @@ public class UserService {
         JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
         UserDAO userDAO = jdbcDaoFactory.createUserDAO();
         userDAO.remove(user);
+    }
+    public User findByLogin(String login)  {
+        JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
+        UserDAO userDAO = jdbcDaoFactory.createUserDAO();
+        try {
+            return userDAO.findByLogin(login);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
