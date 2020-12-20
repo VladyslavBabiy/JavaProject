@@ -1,8 +1,8 @@
-package ua.command;
+package ua.conroller.command;
 
 
 import ua.model.entity.User;
-import ua.model.service.UserService;
+import ua.model.service.Impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,22 +12,22 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class Login implements Command {
-    UserService userService;
+    UserServiceImpl userServiceImpl;
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
-        final UserService userService = new UserService();
+        final UserServiceImpl userServiceImpl = new UserServiceImpl();
         final HttpSession session = request.getSession();
-        User user = userService.findByLogin(login);
-        System.out.println(user);
         if (nonNull(session) &&
                 nonNull(session.getAttribute("login")) &&
                 nonNull(session.getAttribute("password"))) {
 
             final User.Role role = (User.Role) session.getAttribute("role");
             return moveToMenu(request, role);
-        } else if (nonNull(user.getLogin())&&nonNull(user.getPassword())
+        }
+        User user = userServiceImpl.findByLogin(login).get();
+        if (nonNull(user.getLogin())&&nonNull(user.getPassword())
                 &&user.getPassword().equals(password)&&user.getLogin().equals(login))
         {
             final User.Role role = user.getRole();
@@ -45,15 +45,15 @@ public class Login implements Command {
             throws ServletException, IOException {
         if (role.equals(User.Role.Admin)) {
 
-            return "/admin_menu.jsp";
+            return "redirect:/app/admin/admin_account";
 
         } else if (role.equals(User.Role.User)) {
 
-            return "/user_menu.jsp";
+            return "redirect:/app/user/user_account";
 
         } else {
 
-            return "/login.jsp";
+            return "/view/login.jsp";
         }
     }
 }

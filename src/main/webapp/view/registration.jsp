@@ -28,6 +28,22 @@
     <c:if test="${invalidLogin == false}">
         <fmt:message key="invalid.login"/>
     </c:if><br>
+    <strong><fmt:message key="form.name"/></strong>:<input type="text" name="first_name">
+    <c:if test="${invalidLogin == false}">
+        <fmt:message key="invalid.name"/>
+    </c:if><br>
+    <strong><fmt:message key="form.patronymic"/></strong>:<input type="text" name="middle_name">
+    <c:if test="${invalidLogin == false}">
+        <fmt:message key="invalid.patronymic"/>
+    </c:if><br>
+    <strong><fmt:message key="form.surname"/></strong>:<input type="text" name="last_name">
+    <c:if test="${invalidLogin == false}">
+        <fmt:message key="invalid.surname"/>
+    </c:if><br>
+
+
+
+
     <input type="submit" value=<fmt:message key="form.register"/>>
 </form>
 <br>

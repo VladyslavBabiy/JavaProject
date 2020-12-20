@@ -11,65 +11,78 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCUserDAO implements UserDAO {
-    UserMapper userMapper;
+    private UserMapper userMapper;
     private Connection connection;
-    public JDBCUserDAO()
-    {
+
+    public JDBCUserDAO(Connection connection) {
+        this.connection = connection;
         userMapper = new UserMapper();
     }
 
     @Override
-    public void add(User user) throws SQLException {
+    public void add(User user) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO user(LOGIN,PASSWORD,ROLE,EMAIL,ID)value (?,?,?,?,DEFAULT)");
-            preparedStatementSet(user,preparedStatement,true);
+            preparedStatement = connection.prepareStatement("INSERT INTO user(LOGIN,PASSWORD,ROLE,EMAIL,FIST_NAME,MIDDLE_NAME,LAST_NAME,ID)value (?,?,?,?,?,?,?,DEFAULT)");
+            preparedStatementSet(user, preparedStatement, true);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
 
     @Override
-    public List<User> geAll() throws SQLException {
-        List<User> addressList = new ArrayList<>();
+    public List<User> geAll() {
+        List<User> userList = new ArrayList<>();
         Statement statement = null;
         try {
             statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT ID, LOGIN, PASSWORD, ROLE, EMAIL FROM user");
+            ResultSet resultSet = statement.executeQuery("SELECT ID, LOGIN, PASSWORD, ROLE, EMAIL,FIST_NAME,MIDDLE_NAME,LAST_NAME FROM user");
 
             while (resultSet.next()) {
                 User user = userMapper.extractFromResultSet(resultSet);
 
-                addressList.add(user);
+                userList.add(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (statement != null) {
-                statement.close();
+            try {
+                if (statement != null) {
+
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        return addressList;
+        return userList;
     }
 
     @Override
-    public User getById(Long id) throws SQLException {
+    public Optional<User> getById(Long id) {
         PreparedStatement preparedStatement = null;
         User user = null;
         try {
-            preparedStatement = connection.prepareStatement("SELECT ID, LOGIN, PASSWORD, ROLE, EMAIL FROM user WHERE ID=?");
+            preparedStatement = connection.prepareStatement("SELECT ID, LOGIN, PASSWORD, ROLE, EMAIL, FIRST_NAME, MIDDLE_NAME, LAST_NAME FROM user WHERE ID=?");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             user = userMapper.extractFromResultSet(resultSet);
@@ -77,42 +90,55 @@ public class JDBCUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
-       
-        return user;
+
+        return Optional.of(user);
     }
 
     @Override
-    public void update(User user) throws SQLException {
+    public void update(User user) {
         PreparedStatement preparedStatement = null;
 
-        String sql = "UPDATE user SET LOGIN=?, PASSWORD=?, ROLE=?, EMAIL=? WHERE ID=?";
+        String sql = "UPDATE user SET LOGIN=?, PASSWORD=?, ROLE=?, EMAIL=?,FIRST_NAME = ?,MIDDLE_NAME = ?,LAST_NAME = ? WHERE ID=?";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatementSet(user, preparedStatement,false);
+            preparedStatementSet(user, preparedStatement, false);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
+
     @Override
-    public void remove(User user) throws SQLException {
+    public void remove(User user) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("DELETE FROM user WHERE ID=?");
@@ -123,59 +149,101 @@ public class JDBCUserDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
 
     @Override
-    public User findByLogin(String login) throws SQLException {
+    public Optional<User> findByLogin(String login) {
         PreparedStatement preparedStatement = null;
         User user = new User();
         try {
-            preparedStatement = connection.prepareStatement("SELECT LOGIN, PASSWORD, ROLE, EMAIL,ID FROM user WHERE LOGIN=?");
+            preparedStatement = connection.prepareStatement("SELECT LOGIN, PASSWORD, ROLE, EMAIL, ID, FIRST_NAME, MIDDLE_NAME, LAST_NAME FROM user WHERE LOGIN=?");
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next())
-            {
-                user.setLogin(resultSet.getString("LOGIN"));
-                user.setPassword(resultSet.getString("PASSWORD"));
-                user.setRole(User.Role.valueOf(resultSet.getString("ROLE")));
-                user.setEmail(resultSet.getString("EMAIL"));
-                user.setId(resultSet.getLong("ID"));
-                preparedStatement.executeUpdate();
+            if (resultSet.next()) {
+                return Optional.of(userMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
 
-        return user;
+        return Optional.empty();
     }
 
-    private void preparedStatementSet(User user, PreparedStatement preparedStatement,boolean add) throws SQLException {
-        if (!add){
-            preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, String.valueOf(user.getRole()));
-            preparedStatement.setString(4, user.getEmail());
-            preparedStatement.setLong(5,  user.getId());
+    @Override
+    public Optional<User> findByEmail(String email) {
+        PreparedStatement preparedStatement = null;
+        User user = new User();
+        try {
+            preparedStatement = connection.prepareStatement("SELECT LOGIN, PASSWORD, ROLE, EMAIL, ID, FIRST_NAME, MIDDLE_NAME, LAST_NAME FROM user WHERE EMAIL=?");
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(userMapper.extractFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
         }
-        else {
+
+        return Optional.empty();
+    }
+
+    private void preparedStatementSet(User user, PreparedStatement preparedStatement, boolean add) throws SQLException {
+        if (!add) {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, String.valueOf(user.getRole()));
             preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getFirst_name());
+            preparedStatement.setString(6, user.getMiddle_name());
+            preparedStatement.setString(7, user.getLast_name());
+            preparedStatement.setLong(8, user.getId());
+        } else {
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, String.valueOf(user.getRole()));
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getFirst_name());
+            preparedStatement.setString(6, user.getMiddle_name());
+            preparedStatement.setString(7, user.getLast_name());
         }
     }
 

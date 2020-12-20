@@ -1,62 +1,21 @@
 package ua.model.service;
 
-
+import ua.model.dao.DaoFactory;
 import ua.model.dao.UserDAO;
+import ua.model.dto.UserDTO;
 import ua.model.entity.User;
-import ua.model.dao.impl.JDBCDaoFactory;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
-public class UserService {
-    public List<User> getAllUser(){
-        JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
-        UserDAO dao = jdbcDaoFactory.createUserDAO();
-        try {
-            return dao.geAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void addUser(User user)
-    {
-        JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
-        UserDAO dao = jdbcDaoFactory.createUserDAO();
-        try {
-            dao.add(user);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public User getById(Long id) throws SQLException {
-        JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
-        UserDAO userDAO = jdbcDaoFactory.createUserDAO();
-        return userDAO.getById(id);
-    }
-
-    public void update(User user) throws SQLException {
-        JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
-        UserDAO userDAO = jdbcDaoFactory.createUserDAO();
-        userDAO.update(user);
-    }
-
-    public void remove(User user) throws SQLException {
-        JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
-        UserDAO userDAO = jdbcDaoFactory.createUserDAO();
-        userDAO.remove(user);
-    }
-    public User findByLogin(String login)  {
-        JDBCDaoFactory jdbcDaoFactory = new JDBCDaoFactory();
-        UserDAO userDAO = jdbcDaoFactory.createUserDAO();
-        try {
-            return userDAO.findByLogin(login);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
+public abstract class UserService {
+    protected final UserDAO userDao = DaoFactory.getInstance().createUserDAO();
+    public abstract void addUser(UserDTO user) throws SQLException;
+    public abstract Optional<User> getById(Long id) throws SQLException;
+    public abstract void update(UserDTO userDTO);
+    public abstract void remove(UserDTO userDTO);
+    public abstract Optional<User> findByLogin(String login);
+    public abstract Optional<User> findByEmail(String email);
+    public abstract List<User> getAll();
 }

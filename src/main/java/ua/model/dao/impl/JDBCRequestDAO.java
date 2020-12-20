@@ -1,4 +1,5 @@
 package ua.model.dao.impl;
+
 ;
 
 
@@ -9,19 +10,19 @@ import ua.model.entity.Request;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCRequestDAO implements RequestDAO {
-    JDBCConnectorMySql jdbcConnectorMySql;
-    RequestMapper requestMapper;
+    private RequestMapper requestMapper;
     private Connection connection;
-    public JDBCRequestDAO()
-    {
+
+    public JDBCRequestDAO(Connection connection) {
         requestMapper = new RequestMapper();
-        jdbcConnectorMySql = new JDBCConnectorMySql();
-        connection = jdbcConnectorMySql.getConnection();
+        this.connection = connection;
     }
+
     @Override
-    public void add(Request request) throws SQLException {
+    public void add(Request request){
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO REQUEST(SEATS_NUMBER, APARTMENT_CLASS,DATE_SETTLEMENT,DATE_EVICTION, ID)value (?,?,?,?,?)");
@@ -29,16 +30,25 @@ public class JDBCRequestDAO implements RequestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
 
 
     @Override
-    public List<Request> geAll() throws SQLException {
-        List<Request> addressList = new ArrayList<>();
+    public List<Request> geAll() {
+        List<Request> requestList = new ArrayList<>();
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -47,20 +57,29 @@ public class JDBCRequestDAO implements RequestDAO {
 
             while (resultSet.next()) {
                 Request request = requestMapper.extractFromResultSet(resultSet);
-                addressList.add(request);
+                requestList.add(request);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (statement != null) {
-                statement.close();
+            try {
+                if (statement != null) {
+
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        return addressList;
+        return requestList;
     }
 
     @Override
-    public Request getById(Long id) throws SQLException {
+    public Optional<Request> getById(Long id) {
         PreparedStatement preparedStatement = null;
         Request request = null;
         try {
@@ -72,15 +91,24 @@ public class JDBCRequestDAO implements RequestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
-        return request;
+        return Optional.of(request);
     }
 
     @Override
-    public void update(Request request) throws SQLException {
+    public void update(Request request) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("UPDATE REQUEST SET SEATS_NUMBER=?, APARTMENT_CLASS=?, DATE_SETTLEMENT=?, DATE_EVICTION=? WHERE ID=?");
@@ -91,8 +119,17 @@ public class JDBCRequestDAO implements RequestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
@@ -106,7 +143,7 @@ public class JDBCRequestDAO implements RequestDAO {
     }
 
     @Override
-    public void remove(Request request) throws SQLException {
+    public void remove(Request request) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("DELETE FROM ROOM WHERE ID=?");
@@ -117,13 +154,19 @@ public class JDBCRequestDAO implements RequestDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
 }

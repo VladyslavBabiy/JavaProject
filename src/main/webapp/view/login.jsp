@@ -14,7 +14,7 @@
 <body>
         <div class="form">
             <h1><fmt:message key="login.title"/></h1><br>
-            <form method="post" action="">
+            <form method="post" action="${pageContext.request.contextPath}/app/login">
 
                 <input type="text" required placeholder=<fmt:message key="form.email"/> name="login"><br>
                 <input type="password" required placeholder=<fmt:message key="form.password"/> name="password"><br>

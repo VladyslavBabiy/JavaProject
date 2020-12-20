@@ -1,10 +1,7 @@
-package ua;
+package ua.conroller;
 
-import ua.command.Command;
-import ua.command.Exception;
-import ua.command.LogOut;
-import ua.command.Login;
-import ua.command.Registration;
+import ua.conroller.command.*;
+import ua.conroller.command.Exception;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -20,6 +17,8 @@ public class Servlet extends HttpServlet {
         commands.put("login", new Login());
         commands.put("registration", new Registration());
         commands.put("exception" , new Exception());
+        commands.put("user/user_account",new UserAccount());
+        commands.put("admin/admin_account",new AdminAccount());
     }
 
     public void doGet(HttpServletRequest request,

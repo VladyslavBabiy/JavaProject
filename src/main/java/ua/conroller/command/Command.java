@@ -1,4 +1,4 @@
-package ua.command;
+package ua.conroller.command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -4,24 +4,24 @@ package ua.model.dao.impl;
 import ua.model.dao.RoomDAO;
 import ua.model.dao.mapper.RoomMapper;
 import ua.model.entity.Room;
+import ua.model.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCRoomDAO implements RoomDAO {
-    JDBCConnectorMySql jdbcConnectorMySql;
-    RoomMapper roomMapper;
-    public JDBCRoomDAO()
-    {
-        jdbcConnectorMySql = new JDBCConnectorMySql();
-        roomMapper = new RoomMapper();
-        connection = jdbcConnectorMySql.getConnection();
-    }
     private Connection connection;
+    private RoomMapper roomMapper;
+    public JDBCRoomDAO(Connection connection)
+    {
+        roomMapper = new RoomMapper();
+       this.connection=connection;
+    }
 
     @Override
-    public void add(Room room) throws SQLException {
+    public void add(Room room) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO ROOM(SEATS_NUMBER, APARTMENT_CLASS,APARTMENT_NAME,ID)value (?,?,?,?)");
@@ -30,18 +30,24 @@ public class JDBCRoomDAO implements RoomDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
 
     @Override
-    public List<Room> geAll() throws SQLException {
-        List<Room> addressList = new ArrayList<>();
+    public List<Room> geAll()  {
+        List<Room> roomList = new ArrayList<>();
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -50,23 +56,29 @@ public class JDBCRoomDAO implements RoomDAO {
 
             while (resultSet.next()) {
                 Room room = roomMapper.extractFromResultSet(resultSet);
-                addressList.add(room);
+                roomList.add(room);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            try {
             if (statement != null) {
-                statement.close();
+
+                    statement.close();
             }
             if (connection != null) {
-                connection.close();
+                    connection.close();
+                }
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        return addressList;
+        return roomList;
     }
 
     @Override
-    public Room getById(Long id) throws SQLException {
+    public Optional<Room> getById(Long id) {
         PreparedStatement preparedStatement = null;
         Room room = null;
         try {
@@ -78,18 +90,24 @@ public class JDBCRoomDAO implements RoomDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
-        return room;
+        return Optional.of(room);
     }
 
     @Override
-    public void update(Room room) throws SQLException {
+    public void update(Room room){
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("UPDATE ROOM SET SEATS_NUMBER=?, APARTMENT_CLASS=?, APARTMENT_NAME=? WHERE ID=?");
@@ -98,11 +116,17 @@ public class JDBCRoomDAO implements RoomDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
     }
@@ -115,7 +139,7 @@ public class JDBCRoomDAO implements RoomDAO {
     }
 
     @Override
-    public void remove(Room room) throws SQLException {
+    public void remove(Room room) {
         PreparedStatement preparedStatement = null;
         try {
              preparedStatement = connection.prepareStatement("DELETE FROM ROOM WHERE ID=?");
@@ -126,16 +150,18 @@ public class JDBCRoomDAO implements RoomDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             }
-            if (connection != null) {
-                connection.close();
+            catch (SQLException e)
+            {
+                e.printStackTrace();
             }
         }
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
     }
 }
