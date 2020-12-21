@@ -15,12 +15,15 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String login, String password, Role role, String email) {
+    public User(Long id, String login, String password, Role role, String email, String first_name, String last_name, String middle_name) {
         Id = id;
         this.login = login;
         this.password = password;
         this.role = role;
         this.email = email;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.middle_name = middle_name;
     }
 
     public static UserDTOBuilder builder() {
@@ -110,6 +113,20 @@ public class User {
         Unknown;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "Id=" + Id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", email='" + email + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", middle_name='" + middle_name + '\'' +
+                '}';
+    }
+
     public static class UserDTOBuilder {
         private Long id;
         private String login;
@@ -159,12 +176,12 @@ public class User {
         }
 
         public UserDTOBuilder middle_name(String middle_name) {
-            this.first_name = middle_name;
+            this.middle_name = middle_name;
             return this;
         }
 
         public User build() {
-            return new User(id, login, password, role, email);
+            return new User(id, login, password, role, email,first_name,last_name,middle_name);
         }
 
         @Override

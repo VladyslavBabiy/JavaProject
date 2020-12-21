@@ -1,9 +1,9 @@
-package ua.conroller.command;
+package ua.controller.command;
 
 import ua.model.dto.UserDTO;
-import ua.model.entity.User;
 import ua.model.exeption.AlreadyUsedName;
 import ua.model.service.Impl.UserServiceImpl;
+import ua.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
@@ -13,11 +13,12 @@ import javax.validation.Validator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Registration implements Command {
-    UserServiceImpl userServiceImpl;
-    public Registration(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+public class Register implements Command {
+    UserService userService;
+    public Register(UserServiceImpl userService) {
+        this.userService = userService;
     }
+
     @Override
     public String execute(HttpServletRequest request) {
         UserDTO userDTO = UserDTO.builder()
@@ -28,6 +29,7 @@ public class Registration implements Command {
                 .middle_name(request.getParameter("middle_name"))
                 .last_name(request.getParameter("last_name"))
                 .build();
+        System.out.println(userDTO);
         Validator validator = Validation.
                 buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<UserDTO>> constraintViolations = validator.validate(userDTO);
@@ -37,13 +39,12 @@ public class Registration implements Command {
                     .collect(Collectors.toList()));
             return "/view/registration.jsp";
         }
-        User registeredUser;
         try {
-            userServiceImpl.addUser(userDTO);
+            userService.addUser(userDTO);
             request.setAttribute("userRegistrationMessage", true);
         } catch (AlreadyUsedName existsException) {
             request.setAttribute("userRegistrationMessage", false);
-            return "/view/registration.jsp";
+            return "/view/login.jsp";
         }
         return "/view/registration.jsp";
     }

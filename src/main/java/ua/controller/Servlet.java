@@ -1,7 +1,8 @@
-package ua.conroller;
+package ua.controller;
 
-import ua.conroller.command.*;
-import ua.conroller.command.Exception;
+import ua.controller.command.*;
+import ua.controller.command.Exception;
+import ua.model.service.Impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -14,19 +15,23 @@ public class Servlet extends HttpServlet {
 
     public void init(){
         commands.put("logout", new LogOut());
-        commands.put("login", new Login());
+        commands.put("login", new Login(new UserServiceImpl()));
         commands.put("registration", new Registration());
         commands.put("exception" , new Exception());
         commands.put("user/user_account",new UserAccount());
         commands.put("admin/admin_account",new AdminAccount());
+        commands.put("register",new Register(new UserServiceImpl()));
+        commands.put("user/booking_request",new BookingRequest());
     }
 
+    @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);
@@ -36,14 +41,12 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        System.out.println(path);
         path = path.replaceAll(".*/app/" , "");
-        System.out.println(path);
         Command command = commands.getOrDefault(path ,
-                (r)->"/index.jsp)");
+                (r)->"/view/unsupportedCommand)");
         String page = command.execute(request);
-        if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/api"));
+        if(page.startsWith("redirect:")){
+            response.sendRedirect(page.replace("redirect:", ""));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
         }

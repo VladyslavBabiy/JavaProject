@@ -1,8 +1,8 @@
-package ua.conroller.command;
+package ua.controller.command;
 
 
 import ua.model.entity.User;
-import ua.model.service.Impl.UserServiceImpl;
+import ua.model.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +12,14 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class Login implements Command {
-    UserServiceImpl userServiceImpl;
+    UserService userService;
+    public Login(UserService userService) {
+        this.userService = userService;
+    }
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
-        final UserServiceImpl userServiceImpl = new UserServiceImpl();
         final HttpSession session = request.getSession();
         if (nonNull(session) &&
                 nonNull(session.getAttribute("login")) &&
@@ -26,7 +28,7 @@ public class Login implements Command {
             final User.Role role = (User.Role) session.getAttribute("role");
             return moveToMenu(request, role);
         }
-        User user = userServiceImpl.findByLogin(login).get();
+        User user = userService.findByLogin(login).orElse(new User());
         if (nonNull(user.getLogin())&&nonNull(user.getPassword())
                 &&user.getPassword().equals(password)&&user.getLogin().equals(login))
         {
@@ -48,8 +50,8 @@ public class Login implements Command {
             return "redirect:/app/admin/admin_account";
 
         } else if (role.equals(User.Role.User)) {
-
             return "redirect:/app/user/user_account";
+//            return "/view/user/user_account.jsp";
 
         } else {
 

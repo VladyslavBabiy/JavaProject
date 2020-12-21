@@ -23,6 +23,7 @@ public class UserServiceImpl extends UserService {
         {
             throw new AlreadyUsedEmail("Email " + userDTO.toString() + " already exists in system;");
         }
+
         userDao.add(buildUserDtoToUser(userDTO));
     }
 
@@ -57,14 +58,17 @@ public class UserServiceImpl extends UserService {
     }
 
     private User buildUserDtoToUser(UserDTO userDTO) {
-        return User.builder()
+        User user = User.builder()
                 .email(userDTO.getEmail())
                 .login(userDTO.getLogin())
                 .password(userDTO.getPassword())
                 .firs_name(userDTO.getFirst_name())
                 .middle_name(userDTO.getMiddle_name())
                 .last_name(userDTO.getLast_name())
+                .role(User.Role.User)
                 .build();
+        System.out.println(user);
+        return user;
     }
 
 }

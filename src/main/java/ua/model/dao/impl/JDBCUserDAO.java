@@ -13,6 +13,7 @@ import java.util.Optional;
 public class JDBCUserDAO implements UserDAO {
     private UserMapper userMapper;
     private Connection connection;
+    private final String sql= "INSERT INTO user(LOGIN,PASSWORD,ROLE,EMAIL,FIRST_NAME,MIDDLE_NAME,LAST_NAME,ID)value (?,?,?,?,?,?,?,DEFAULT)";
 
     public JDBCUserDAO(Connection connection) {
         this.connection = connection;
@@ -21,26 +22,12 @@ public class JDBCUserDAO implements UserDAO {
 
     @Override
     public void add(User user) {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement("INSERT INTO user(LOGIN,PASSWORD,ROLE,EMAIL,FIST_NAME,MIDDLE_NAME,LAST_NAME,ID)value (?,?,?,?,?,?,?,DEFAULT)");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+//            preparedStatement = connection.prepareStatement("INSERT INTO user(LOGIN,PASSWORD,ROLE,EMAIL,FIST_NAME,MIDDLE_NAME,LAST_NAME,ID)value (?,?,?,?,?,?,?,DEFAULT)");
             preparedStatementSet(user, preparedStatement, true);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -60,19 +47,6 @@ public class JDBCUserDAO implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return userList;
     }
@@ -89,21 +63,7 @@ public class JDBCUserDAO implements UserDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
         }
-
         return Optional.of(user);
     }
 
@@ -121,19 +81,6 @@ public class JDBCUserDAO implements UserDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -148,26 +95,12 @@ public class JDBCUserDAO implements UserDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
         }
     }
 
     @Override
     public Optional<User> findByLogin(String login) {
-        PreparedStatement preparedStatement = null;
-        User user = new User();
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement("SELECT LOGIN, PASSWORD, ROLE, EMAIL, ID, FIRST_NAME, MIDDLE_NAME, LAST_NAME FROM user WHERE LOGIN=?");
             preparedStatement.setString(1, login);
@@ -177,21 +110,7 @@ public class JDBCUserDAO implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
         }
-
         return Optional.empty();
     }
 
@@ -208,21 +127,7 @@ public class JDBCUserDAO implements UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
         }
-
         return Optional.empty();
     }
 

@@ -2,7 +2,7 @@ package ua.model.entity.enums;
 
 public enum ApartmentClass {
     //стандартная комната
-    Standart("standart"),
+    Standard("standart"),
     //номер со спальней
     Bedroom("bedroom"),
     //номер (больше чем стандартный) с гостиной и спальней, с мебелью и оборудованием высокого качества

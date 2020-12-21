@@ -15,6 +15,7 @@ public class UserMapper implements ObjectMapper<User> {
                 .id(resultSet.getLong("ID"))
                 .email(resultSet.getString("EMAIL"))
                 .password(resultSet.getString("PASSWORD"))
+                .login(resultSet.getString("LOGIN"))
                 .role(User.Role.valueOf(resultSet.getString("ROLE")))
                 .firs_name(resultSet.getString("FIRST_NAME"))
                 .middle_name(resultSet.getString("MIDDLE_NAME"))

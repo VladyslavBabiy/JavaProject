@@ -34,7 +34,7 @@ public class JDBCDaoFactory  extends DaoFactory {
         Properties property = new Properties();
         Connection connection = null;
         try{
-            fis = new FileInputStream("src/main/resources/config.properties");
+            fis = new FileInputStream("/home/vlad/IdeaProjects/HotelProject/src/main/resources/config.properties");
             property.load(fis);
 
             String DB_DRIVER = property.getProperty("db.driver");

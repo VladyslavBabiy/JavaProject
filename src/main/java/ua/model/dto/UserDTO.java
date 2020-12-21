@@ -8,31 +8,36 @@ import java.util.Objects;
 
 public class UserDTO {
     @NotNull(message =  "Login field null!")
-    @NotBlank(message = "Login field blank!")
-    @Pattern(regexp = "^[а-яА-Яa-zA-Z0-9]+$")
+//    @NotBlank(message = "Login field blank!")
+//    @Pattern(regexp = "^[а-яА-Яa-zA-Z0-9]+$")
     private String login;
+
     @NotNull(message = "Password field null!")
-    @NotBlank(message = "Password field blank!")
-    @Size(min = 8,max = 16,message = "Password field not in size 8 - 16")
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$")
+//    @NotBlank(message = "Password field blank!")
+//    @Size(min = 8,max = 16,message = "Password field not in size 8 - 16")
+//    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$")
     private String password;
-    @Email
+
+//    @Email
     @NotBlank(message = "Email field blank!")
     private String email;
+
     @NotNull(message = "First name field null!")
-    @NotBlank(message = "Fist name field blank")
-    @Pattern(regexp = "^[а-яА-ЯёЁa-zA-Z]+$")
-    @Size(min = 3,max = 65,message = "First name field not in size 3 - 65")
+//    @NotBlank(message = "Fist name field blank")
+//    @Pattern(regexp = "^[а-яА-ЯёЁa-zA-Z]+$")
+//    @Size(min = 3,max = 65,message = "First name field not in size 3 - 65")
     private String first_name;
+
     @NotNull(message = "Last name field null!")
-    @NotBlank(message = "Last name field blank")
-    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$")
-    @Size(min = 3,max = 65,message = "Last name field not in size 3 - 65")
+//    @NotBlank(message = "Last name field blank")
+//    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$")
+//    @Size(min = 3,max = 65,message = "Last name field not in size 3 - 65")
     private String last_name;
+
     @NotNull(message = "Middle name field null!")
-    @NotBlank(message = "Middle name field blank")
-    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$")
-    @Size(min = 3,max = 65,message = "Middle name field not in size 3 - 65")
+//    @NotBlank(message = "Middle name field blank")
+//    @Pattern(regexp = "^[а-яА-Яa-zA-Z]+$")
+//    @Size(min = 3,max = 65,message = "Middle name field not in size 3 - 65")
     private String middle_name;
 
     public UserDTO(String login,String password,String email,String first_name,String middle_name,String last_name) {
@@ -160,7 +165,7 @@ public class UserDTO {
         }
 
         public UserDTOBuilder middle_name(String middle_name) {
-            this.first_name = middle_name;
+            this.middle_name = middle_name;
             return this;
         }
 

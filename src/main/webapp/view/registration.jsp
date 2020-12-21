@@ -15,35 +15,13 @@
 </head>
 <body>
 <h3></h3>
-<form action="" method="post">
+<form action="register" method="post">
     <strong><fmt:message key="form.email"/></strong>:<input type="text" name="email">
-    <c:if test="${invalidEmail == false}">
-        <fmt:message key="invalid.email"/>
-    </c:if><br>
     <strong><fmt:message key="form.password"/></strong>:<input type="password" name="password">
-    <c:if test="${invalidPassword == false}">
-        <fmt:message key="invalid.password"/>
-    </c:if><br>
     <strong><fmt:message key="form.login"/></strong>:<input type="text" name="login">
-    <c:if test="${invalidLogin == false}">
-        <fmt:message key="invalid.login"/>
-    </c:if><br>
     <strong><fmt:message key="form.name"/></strong>:<input type="text" name="first_name">
-    <c:if test="${invalidLogin == false}">
-        <fmt:message key="invalid.name"/>
-    </c:if><br>
     <strong><fmt:message key="form.patronymic"/></strong>:<input type="text" name="middle_name">
-    <c:if test="${invalidLogin == false}">
-        <fmt:message key="invalid.patronymic"/>
-    </c:if><br>
     <strong><fmt:message key="form.surname"/></strong>:<input type="text" name="last_name">
-    <c:if test="${invalidLogin == false}">
-        <fmt:message key="invalid.surname"/>
-    </c:if><br>
-
-
-
-
     <input type="submit" value=<fmt:message key="form.register"/>>
 </form>
 <br>
