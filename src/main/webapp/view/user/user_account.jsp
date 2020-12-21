@@ -15,5 +15,6 @@
 
 <h1>Hello USER!</h1>
 <a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="logout"/></a>
+<a href="${pageContext.request.contextPath}/app/user/booking_request"><fmt:message key="booking"/> </a>
 </body>
 </html>

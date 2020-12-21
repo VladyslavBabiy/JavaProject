@@ -11,7 +11,7 @@ public class RoomMapper implements ObjectMapper<Room> {
     @Override
     public Room extractFromResultSet(ResultSet resultSet) throws SQLException {
         Room room = new Room();
-        room.setId(resultSet.getLong("ID"));
+        room.setID(resultSet.getLong("ID"));
         room.setSeatsNumber(resultSet.getLong("SEATS_NUMBER"));
         room.setApartmentClass(ApartmentClass.valueOf(resultSet.getString("APARTMENT_CLASS")));
         room.setApartmentName(resultSet.getString("APARTMENT_NAME"));

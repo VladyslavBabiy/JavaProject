@@ -6,20 +6,27 @@ import ua.model.entity.enums.ApartmentClass;
 import java.util.Objects;
 
 public class Room {
-    private Long Id;
+    private Long ID;
     private Long seatsNumber;
     private ApartmentClass apartmentClass;
     private String apartmentName;
 
-    public Room() {
+
+    public Room(Long ID, Long seatsNumber, ApartmentClass apartmentClass, String apartmentName) {
+        this.ID = ID;
+        this.seatsNumber = seatsNumber;
+        this.apartmentClass = apartmentClass;
+        this.apartmentName = apartmentName;
+    }
+    public static RoomBuilder RoomBuilder (){
+        return new RoomBuilder();
+    }
+    public Long getID() {
+        return ID;
     }
 
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
     public Long getSeatsNumber() {
@@ -51,21 +58,62 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return Id.equals(room.Id) && seatsNumber.equals(room.seatsNumber) && apartmentClass == room.apartmentClass && apartmentName.equals(room.apartmentName);
+        return ID.equals(room.ID) && seatsNumber.equals(room.seatsNumber) && apartmentClass == room.apartmentClass && apartmentName.equals(room.apartmentName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, seatsNumber, apartmentClass, apartmentName);
+        return Objects.hash(ID, seatsNumber, apartmentClass, apartmentName);
     }
 
     @Override
     public String toString() {
         return "Room{" +
-                "Id=" + Id +
+                "Id=" + ID +
                 ", seats_number=" + seatsNumber +
                 ", apartment_class=" + apartmentClass +
                 ", ApartmentName='" + apartmentName + '\'' +
                 '}';
+    }
+
+    public static class RoomBuilder {
+        private Long ID;
+        private Long seatsNumber;
+        private ApartmentClass apartmentClass;
+        private String apartmentName;
+
+        public RoomBuilder() {
+
+        }
+
+        public RoomBuilder ID(Long ID) {
+            this.ID = ID;
+            return this;
+        }
+
+        public RoomBuilder seatsNumber(Long seatsNumber) {
+            this.seatsNumber = seatsNumber;
+            return this;
+        }
+
+        public RoomBuilder apartmentClass(ApartmentClass apartmentClass) {
+            this.apartmentClass = apartmentClass;
+            return this;
+        }
+
+        public RoomBuilder apartmentName(String apartmentName) {
+            this.apartmentName = apartmentName;
+            return this;
+        }
+        public Room build(){return new Room(ID,seatsNumber,apartmentClass,apartmentName);}
+        @Override
+        public String toString() {
+            return "RoomBuilder{" +
+                    "ID=" + ID +
+                    ", seatsNumber=" + seatsNumber +
+                    ", apartmentClass=" + apartmentClass +
+                    ", apartmentName='" + apartmentName + '\'' +
+                    '}';
+        }
     }
 }

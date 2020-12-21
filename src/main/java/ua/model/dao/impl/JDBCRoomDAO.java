@@ -4,7 +4,6 @@ package ua.model.dao.impl;
 import ua.model.dao.RoomDAO;
 import ua.model.dao.mapper.RoomMapper;
 import ua.model.entity.Room;
-import ua.model.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -135,7 +134,7 @@ public class JDBCRoomDAO implements RoomDAO {
         preparedStatement.setLong(1, room.getSeatsNumber());
         preparedStatement.setString(2, String.valueOf(room.getApartmentClass()));
         preparedStatement.setString(3, String.valueOf(room.getApartmentName()));
-        preparedStatement.setLong(4, room.getId());
+        preparedStatement.setLong(4, room.getID());
     }
 
     @Override
@@ -144,7 +143,7 @@ public class JDBCRoomDAO implements RoomDAO {
         try {
              preparedStatement = connection.prepareStatement("DELETE FROM ROOM WHERE ID=?");
 
-            preparedStatement.setLong(1, room.getId());
+            preparedStatement.setLong(1, room.getID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

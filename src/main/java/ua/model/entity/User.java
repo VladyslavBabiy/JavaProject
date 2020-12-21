@@ -26,8 +26,8 @@ public class User {
         this.middle_name = middle_name;
     }
 
-    public static UserDTOBuilder builder() {
-        return new UserDTOBuilder();
+    public static UserBuilder builder() {
+        return new UserBuilder();
     }
 
     public Long getId() {
@@ -127,7 +127,7 @@ public class User {
                 '}';
     }
 
-    public static class UserDTOBuilder {
+    public static class UserBuilder {
         private Long id;
         private String login;
         private String password;
@@ -137,45 +137,45 @@ public class User {
         private String last_name;
         private String middle_name;
 
-        UserDTOBuilder() {
+        UserBuilder() {
         }
 
-        public UserDTOBuilder id(Long id) {
+        public UserBuilder id(Long id) {
             this.id = id;
             return this;
         }
 
-        public UserDTOBuilder login(String login) {
+        public UserBuilder login(String login) {
             this.login = login;
             return this;
         }
 
-        public UserDTOBuilder password(String password) {
+        public UserBuilder password(String password) {
             this.password = password;
             return this;
         }
 
-        public UserDTOBuilder role(Role role) {
+        public UserBuilder role(Role role) {
             this.role = role;
             return this;
         }
 
-        public UserDTOBuilder email(String email) {
+        public UserBuilder email(String email) {
             this.email = email;
             return this;
         }
 
-        public UserDTOBuilder firs_name(String first_name) {
+        public UserBuilder firs_name(String first_name) {
             this.first_name = first_name;
             return this;
         }
 
-        public UserDTOBuilder last_name(String last_name) {
+        public UserBuilder last_name(String last_name) {
             this.last_name = last_name;
             return this;
         }
 
-        public UserDTOBuilder middle_name(String middle_name) {
+        public UserBuilder middle_name(String middle_name) {
             this.middle_name = middle_name;
             return this;
         }

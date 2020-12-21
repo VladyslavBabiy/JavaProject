@@ -7,6 +7,6 @@ import java.io.IOException;
 public class BookingRequest implements Command{
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
-        return null;
+        return "/view/user/booking_request.jsp";
     }
 }
