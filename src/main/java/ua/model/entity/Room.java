@@ -18,6 +18,11 @@ public class Room {
         this.apartmentClass = apartmentClass;
         this.apartmentName = apartmentName;
     }
+
+    public Room() {
+
+    }
+
     public static RoomBuilder RoomBuilder (){
         return new RoomBuilder();
     }

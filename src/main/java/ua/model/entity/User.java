@@ -3,7 +3,7 @@ package ua.model.entity;
 import java.util.Objects;
 
 public class User {
-    private Long Id;
+    private Long id;
     private String login;
     private String password;
     private Role role;
@@ -15,8 +15,8 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String login, String password, Role role, String email, String first_name, String last_name, String middle_name) {
-        Id = id;
+    public User(Long Id, String login, String password, Role role, String email, String first_name, String last_name, String middle_name) {
+        this.id = Id;
         this.login = login;
         this.password = password;
         this.role = role;
@@ -31,11 +31,11 @@ public class User {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getLogin() {
@@ -99,12 +99,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Id.equals(user.Id) && login.equals(user.login) && password.equals(user.password) && role == user.role && email.equals(user.email) && first_name.equals(user.first_name) && last_name.equals(user.last_name) && middle_name.equals(user.middle_name);
+        return id.equals(user.id) && login.equals(user.login) && password.equals(user.password) && role == user.role && email.equals(user.email) && first_name.equals(user.first_name) && last_name.equals(user.last_name) && middle_name.equals(user.middle_name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, login, password, role, email, first_name, last_name, middle_name);
+        return Objects.hash(id, login, password, role, email, first_name, last_name, middle_name);
     }
 
     public enum Role {
@@ -116,7 +116,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + Id +
+                "Id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +

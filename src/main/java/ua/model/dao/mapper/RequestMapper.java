@@ -6,6 +6,7 @@ import ua.model.entity.Request;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class RequestMapper implements ObjectMapper<Request> {
@@ -15,8 +16,8 @@ public class RequestMapper implements ObjectMapper<Request> {
         request.setId(resultSet.getLong("ID"));
         request.setSeats_number(resultSet.getLong("SEATS_NUMBER"));
         request.setApartmentClass(ApartmentClass.valueOf(resultSet.getString("APARTMENT_CLASS")));
-        request.setDateSettlement(resultSet.getDate("DATE_SETTLEMENT"));
-        request.setDateEviction(resultSet.getDate("DATE_EVICTION"));
+        request.setDateSettlement((LocalDateTime)resultSet.getObject("DATE_SETTLEMENT"));
+        request.setDateEviction((LocalDateTime)resultSet.getObject("DATE_EVICTION"));
         return request;
     }
 

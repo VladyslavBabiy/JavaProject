@@ -137,8 +137,8 @@ public class JDBCRequestDAO implements RequestDAO {
     private void preparedStatementSet(Request request, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setLong(1, request.getSeats_number());
         preparedStatement.setString(2, String.valueOf(request.getApartmentClass()));
-        preparedStatement.setDate(3, request.getDateSettlement());
-        preparedStatement.setDate(4, request.getDateEviction());
+        preparedStatement.setObject(3, request.getDateSettlement());
+        preparedStatement.setObject(4, request.getDateEviction());
         preparedStatement.setLong(5, request.getId());
     }
 

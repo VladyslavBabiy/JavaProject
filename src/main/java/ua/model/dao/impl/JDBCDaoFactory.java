@@ -6,6 +6,7 @@ import ua.model.dao.RequestDAO;
 import ua.model.dao.RoomDAO;
 import ua.model.dao.UserDAO;
 
+import javax.sql.DataSource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class JDBCDaoFactory  extends DaoFactory {
+    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
     @Override
     public UserDAO createUserDAO() {
         return new JDBCUserDAO(getConnection());
@@ -29,7 +31,7 @@ public class JDBCDaoFactory  extends DaoFactory {
     public RoomDAO createRoomDAO() {
         return new JDBCRoomDAO(getConnection());
     }
-    public Connection getConnection() {
+    public Connection getConnection1() {
         FileInputStream fis;
         Properties property = new Properties();
         Connection connection = null;
@@ -51,5 +53,13 @@ public class JDBCDaoFactory  extends DaoFactory {
             e.printStackTrace();
         }
         return connection;
+    }
+    public Connection getConnection ()
+    {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
