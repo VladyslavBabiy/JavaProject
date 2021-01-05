@@ -10,7 +10,7 @@
     <title>Booking room</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/app/user/booking_request" method="post">
+<form action="${pageContext.request.contextPath}/app/user/register_request" method="post">
     <input type="text" required placeholder=<fmt:message key="booking.apartment_seats_number"/> name="seats_number"><br>
     <label for="apartment_class"><fmt:message key="booking.choose_apartment"/>:</label>
     <select id="apartment_class" name="apartment_class">
@@ -20,8 +20,8 @@
         <option value="Standard"><fmt:message key="booking.apartment_class.standard"/></option>
         <option value="Suite"><fmt:message key="booking.apartment_class.suite"/></option>
     </select>
-    <p><fmt:message key="booking.choose_date.settlement"/>: <input type="date" name="calendar">
-    <p><fmt:message key="booking.choose_date.eviction"/>: <input type="date" name="calendar">
+    <p><fmt:message key="booking.choose_date.settlement"/>: <input type="datetime-local" name="settlement">
+    <p><fmt:message key="booking.choose_date.eviction"/>: <input type="datetime-local" name="eviction">
         <input class="button" type="submit" value=<fmt:message key="booking.request"/>>
 </form>
 </body>

@@ -15,33 +15,20 @@ import java.util.Optional;
 public class JDBCRequestDAO implements RequestDAO {
     private RequestMapper requestMapper;
     private Connection connection;
+    private final String add = "INSERT INTO request(SEATS_NUMBER, APARTMENT_CLASS,DATE_SETTLEMENT,DATE_EVICTION, ID)value (?,?,?,?,?)";
 
     public JDBCRequestDAO(Connection connection) {
-        requestMapper = new RequestMapper();
         this.connection = connection;
+        requestMapper = new RequestMapper();
     }
 
     @Override
     public void add(Request request){
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement("INSERT INTO REQUEST(SEATS_NUMBER, APARTMENT_CLASS,DATE_SETTLEMENT,DATE_EVICTION, ID)value (?,?,?,?,?)");
-            preparedStatementSet(request, preparedStatement);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(add)){
+            preparedStatementSet(request, preparedStatement,true);
+            preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e)
-            {
-                e.printStackTrace();
-            }
         }
     }
 

@@ -51,7 +51,6 @@ public class Login implements Command {
 
         } else if (role.equals(User.Role.User)) {
             return "redirect:/app/user/user_account";
-//            return "/view/user/user_account.jsp";
 
         } else {
 

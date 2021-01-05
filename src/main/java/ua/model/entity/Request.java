@@ -5,6 +5,7 @@ import ua.model.entity.enums.ApartmentClass;
 
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Request {
@@ -24,8 +25,7 @@ public class Request {
         this.dateSettlement = dateSettlement;
         this.dateEviction = dateEviction;
     }
-
-
+    public static RequestBuilder builder (){return new RequestBuilder();}
     public Long getId() {
         return id;
     }

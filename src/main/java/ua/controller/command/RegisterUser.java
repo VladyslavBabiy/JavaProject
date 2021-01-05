@@ -13,9 +13,9 @@ import javax.validation.Validator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Register implements Command {
+public class RegisterUser implements Command {
     UserService userService;
-    public Register(UserServiceImpl userService) {
+    public RegisterUser(UserServiceImpl userService) {
         this.userService = userService;
     }
 

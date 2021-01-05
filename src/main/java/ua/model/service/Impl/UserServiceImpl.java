@@ -1,10 +1,7 @@
 package ua.model.service.Impl;
 
-
-import ua.model.dao.UserDAO;
 import ua.model.dto.UserDTO;
 import ua.model.entity.User;
-import ua.model.dao.impl.JDBCDaoFactory;
 import ua.model.exeption.AlreadyUsedEmail;
 import ua.model.exeption.AlreadyUsedName;
 import ua.model.service.UserService;
@@ -58,7 +55,7 @@ public class UserServiceImpl extends UserService {
     }
 
     private User buildUserDtoToUser(UserDTO userDTO) {
-        User user = User.builder()
+        return User.builder()
                 .email(userDTO.getEmail())
                 .login(userDTO.getLogin())
                 .password(userDTO.getPassword())
@@ -67,8 +64,6 @@ public class UserServiceImpl extends UserService {
                 .last_name(userDTO.getLast_name())
                 .role(User.Role.User)
                 .build();
-        System.out.println(user);
-        return user;
     }
 
 }
