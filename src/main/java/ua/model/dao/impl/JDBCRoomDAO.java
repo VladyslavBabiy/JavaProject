@@ -47,31 +47,15 @@ public class JDBCRoomDAO implements RoomDAO {
     @Override
     public List<Room> geAll()  {
         List<Room> roomList = new ArrayList<>();
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT ID, SEATS_NUMBER, APARTMENT_CLASS,APARTMENT_NAME FROM ROOM");
-
+        try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM room")) {
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Room room = roomMapper.extractFromResultSet(resultSet);
                 roomList.add(room);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-            if (statement != null) {
-
-                    statement.close();
-            }
-            if (connection != null) {
-                    connection.close();
-                }
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
+           e.printStackTrace();
         }
         return roomList;
     }

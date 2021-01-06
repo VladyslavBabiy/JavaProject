@@ -12,7 +12,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,10 +28,10 @@ public class RegisterRequest implements Command {
         RequestDTO requestDTO = RequestDTO.builder()
                 .seats_number(Long.valueOf(request.getParameter("seats_number")))
                 .apartmentClass(ApartmentClass.valueOf(request.getParameter("apartment_class")))
-                .dateEviction(LocalDateTime.parse(request.getParameter("eviction")))
-                .dateSettlement(LocalDateTime.parse(request.getParameter("settlement")))
+                .dateEviction(LocalDate.parse(request.getParameter("eviction")))
+                .dateSettlement(LocalDate.parse(request.getParameter("settlement")))
+                .userFk((Long)request.getSession().getAttribute("id"))
                 .build();
-        System.out.println(requestDTO);
         Validator validator = Validation.
                 buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<RequestDTO>> constraintViolations = validator.validate(requestDTO);
@@ -39,10 +39,8 @@ public class RegisterRequest implements Command {
             request.setAttribute("constraintViolations", constraintViolations.stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList()));
-            System.out.println("false operation");
             return "/view/user/booking_request.jsp";
         }
-        System.out.println("true");
         requestService.addRequest(requestDTO);
         return "/view/user/user_account.jsp";
     }

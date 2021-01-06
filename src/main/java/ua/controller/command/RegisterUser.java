@@ -23,6 +23,7 @@ public class RegisterUser implements Command {
     public String execute(HttpServletRequest request) {
         UserDTO userDTO = UserDTO.builder()
                 .login(request.getParameter("login"))
+                //TODO добавить шыфрования пароля
                 .password(request.getParameter("password"))
                 .email(request.getParameter("email"))
                 .firs_name(request.getParameter("first_name"))

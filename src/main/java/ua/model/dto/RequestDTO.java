@@ -3,22 +3,24 @@ package ua.model.dto;
 import ua.model.entity.enums.ApartmentClass;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class RequestDTO {
-//    @Positive
+    @Positive
     private Long seatsNumber;
     private ApartmentClass apartmentClass;
-//    @FutureOrPresent
-    private LocalDateTime dateSettlement;
-//    @Future
-    private LocalDateTime dateEviction;
-    public RequestDTO(Long seatsNumber, ApartmentClass apartmentClass, LocalDateTime dateSettlement, LocalDateTime dateEviction) {
+    @FutureOrPresent
+    private LocalDate dateSettlement;
+    @Future
+    private LocalDate dateEviction;
+    private Long userFk;
+    public RequestDTO(Long seatsNumber, ApartmentClass apartmentClass, LocalDate dateSettlement, LocalDate dateEviction,Long userFk) {
         this.seatsNumber = seatsNumber;
         this.apartmentClass = apartmentClass;
         this.dateSettlement = dateSettlement;
         this.dateEviction = dateEviction;
+        this.userFk = userFk;
     }
 
     public static RequestDTOBuilder builder (){return new RequestDTOBuilder();}
@@ -39,23 +41,29 @@ public class RequestDTO {
         this.apartmentClass = apartmentClass;
     }
 
-    public LocalDateTime getDateSettlement() {
+    public LocalDate getDateSettlement() {
         return dateSettlement;
     }
 
-    public void setDateSettlement(LocalDateTime dateSettlement) {
+    public void setDateSettlement(LocalDate dateSettlement) {
         this.dateSettlement = dateSettlement;
     }
 
-    public LocalDateTime getDateEviction() {
+    public LocalDate getDateEviction() {
         return dateEviction;
     }
 
-    public void setDateEviction(LocalDateTime dateEviction) {
+    public void setDateEviction(LocalDate dateEviction) {
         this.dateEviction = dateEviction;
     }
 
+    public Long getUserFk() {
+        return userFk;
+    }
 
+    public void setUserFk(Long userFk) {
+        this.userFk = userFk;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -83,8 +91,9 @@ public class RequestDTO {
     {
         private Long seatsNumber;
         private ApartmentClass apartmentClass;
-        private LocalDateTime dateSettlement;
-        private LocalDateTime dateEviction;
+        private LocalDate dateSettlement;
+        private LocalDate dateEviction;
+        private Long userFk;
 
         public RequestDTOBuilder() {
         }
@@ -98,17 +107,22 @@ public class RequestDTO {
             this.apartmentClass = apartmentClass;
             return this;
         }
-        public RequestDTOBuilder dateSettlement (LocalDateTime dateSettlement)
+        public RequestDTOBuilder dateSettlement (LocalDate dateSettlement)
         {
             this.dateSettlement = dateSettlement;
             return this;
         }
-        public RequestDTOBuilder dateEviction (LocalDateTime dateEviction)
+        public RequestDTOBuilder dateEviction (LocalDate dateEviction)
         {
             this.dateEviction = dateEviction;
             return this;
         }
-        public RequestDTO build (){return new RequestDTO(seatsNumber,apartmentClass,dateSettlement,dateEviction);}
+        public RequestDTOBuilder userFk(Long userFk)
+        {
+            this.userFk = userFk;
+            return this;
+        }
+        public RequestDTO build (){return new RequestDTO(seatsNumber,apartmentClass,dateSettlement,dateEviction,userFk);}
 
         @Override
         public String toString() {

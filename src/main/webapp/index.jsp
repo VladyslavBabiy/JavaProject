@@ -35,9 +35,6 @@
     <li><a href="?sessionLocale=en"><fmt:message key="label.lang.en"/></a></li>
     <li><a href="?sessionLocale=uk"><fmt:message key="label.lang.uk"/></a></li>
 </ul>
-<form action="${pageContext.request.contextPath}/app/index">
-    <p>Выберите дату: <input type="date" name="calendar">
-        <input type="submit" value="Отправить"></p>
-</form>
+<a href="${pageContext.request.contextPath}/app/rooms">Комнати</a>
 </body>
 </html>

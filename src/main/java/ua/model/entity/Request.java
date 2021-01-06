@@ -4,33 +4,35 @@ package ua.model.entity;
 import ua.model.entity.enums.ApartmentClass;
 
 
-import java.time.LocalDateTime;
-import java.util.Locale;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Request {
     private Long id;
     private Long seats_number;
     private ApartmentClass apartmentClass;
-    private LocalDateTime dateSettlement;
-    private LocalDateTime dateEviction;
+    private LocalDate dateSettlement;
+    private LocalDate dateEviction;
+    private Long userFk;
 
-    public Request(){
+    public Request() {
     }
 
-    public Request(Long id, Long seatsNumber, ApartmentClass apartmentClass, LocalDateTime dateSettlement, LocalDateTime dateEviction) {
+    public Request(Long id, Long seatsNumber, ApartmentClass apartmentClass, LocalDate dateSettlement, LocalDate dateEviction,Long userFk) {
         this.id = id;
         this.seats_number = seatsNumber;
         this.apartmentClass = apartmentClass;
         this.dateSettlement = dateSettlement;
         this.dateEviction = dateEviction;
+        this.userFk = userFk;
     }
     public static RequestBuilder builder (){return new RequestBuilder();}
+
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,20 +52,28 @@ public class Request {
         this.apartmentClass = apartmentClass;
     }
 
-    public LocalDateTime getDateSettlement() {
+    public LocalDate getDateSettlement() {
         return dateSettlement;
     }
 
-    public void setDateSettlement(LocalDateTime dateSettlement) {
+    public void setDateSettlement(LocalDate dateSettlement) {
         this.dateSettlement = dateSettlement;
     }
 
-    public LocalDateTime getDateEviction() {
+    public LocalDate getDateEviction() {
         return dateEviction;
     }
 
-    public void setDateEviction(LocalDateTime dateEviction) {
+    public void setDateEviction(LocalDate dateEviction) {
         this.dateEviction = dateEviction;
+    }
+
+    public Long getUserFk() {
+        return userFk;
+    }
+
+    public void setUserFk(Long userFk) {
+        this.userFk = userFk;
     }
 
     @Override
@@ -94,8 +104,9 @@ public class Request {
         private Long id;
         private Long seats_number;
         private ApartmentClass apartmentClass;
-        private LocalDateTime dateSettlement;
-        private LocalDateTime dateEviction;
+        private LocalDate dateSettlement;
+        private LocalDate dateEviction;
+        private Long userFk;
 
         public RequestBuilder() {
         }
@@ -116,17 +127,22 @@ public class Request {
             this.apartmentClass = apartmentClass;
             return this;
         }
-        public RequestBuilder dateSettlement (LocalDateTime dateSettlement)
+        public RequestBuilder dateSettlement (LocalDate dateSettlement)
         {
             this.dateSettlement = dateSettlement;
             return this;
         }
-        public RequestBuilder dateEviction (LocalDateTime dateEviction)
+        public RequestBuilder dateEviction (LocalDate dateEviction)
         {
             this.dateEviction = dateEviction;
             return this;
         }
-        public Request build (){return new Request(id,seats_number,apartmentClass,dateSettlement,dateEviction);}
+        public RequestBuilder userFk(Long userFk)
+        {
+            this.userFk=userFk;
+            return this;
+        }
+        public Request build (){return new Request(id,seats_number,apartmentClass,dateSettlement,dateEviction,userFk);}
 
         @Override
         public String toString() {

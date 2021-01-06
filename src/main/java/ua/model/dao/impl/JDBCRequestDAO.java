@@ -15,7 +15,7 @@ import java.util.Optional;
 public class JDBCRequestDAO implements RequestDAO {
     private RequestMapper requestMapper;
     private Connection connection;
-    private final String add = "INSERT INTO request(SEATS_NUMBER, APARTMENT_CLASS,DATE_SETTLEMENT,DATE_EVICTION, ID)value (?,?,?,?,?)";
+    private final String add = "INSERT INTO request(SEATS_NUMBER, APARTMENT_CLASS,DATE_SETTLEMENT,DATE_EVICTION,USERFK, ID)value (?,?,?,?,?,DEFAULT)";
 
     public JDBCRequestDAO(Connection connection) {
         this.connection = connection;
@@ -26,7 +26,7 @@ public class JDBCRequestDAO implements RequestDAO {
     public void add(Request request){
         try (PreparedStatement preparedStatement = connection.prepareStatement(add)){
             preparedStatementSet(request, preparedStatement,true);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,7 +100,7 @@ public class JDBCRequestDAO implements RequestDAO {
         try {
             preparedStatement = connection.prepareStatement("UPDATE REQUEST SET SEATS_NUMBER=?, APARTMENT_CLASS=?, DATE_SETTLEMENT=?, DATE_EVICTION=? WHERE ID=?");
 
-            preparedStatementSet(request, preparedStatement);
+            preparedStatementSet(request, preparedStatement,false);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -121,12 +121,22 @@ public class JDBCRequestDAO implements RequestDAO {
         }
     }
 
-    private void preparedStatementSet(Request request, PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setLong(1, request.getSeats_number());
-        preparedStatement.setString(2, String.valueOf(request.getApartmentClass()));
-        preparedStatement.setObject(3, request.getDateSettlement());
-        preparedStatement.setObject(4, request.getDateEviction());
-        preparedStatement.setLong(5, request.getId());
+    private void preparedStatementSet(Request request, PreparedStatement preparedStatement,boolean add) throws SQLException {
+        if (!add){
+            preparedStatement.setLong(1, request.getSeats_number());
+            preparedStatement.setString(2, String.valueOf(request.getApartmentClass()));
+            preparedStatement.setObject(3, request.getDateSettlement());
+            preparedStatement.setObject(4, request.getDateEviction());
+            preparedStatement.setObject(5, request.getUserFk());
+            preparedStatement.setLong(6, request.getId());
+        }
+        else {
+            preparedStatement.setLong(1, request.getSeats_number());
+            preparedStatement.setString(2, String.valueOf(request.getApartmentClass()));
+            preparedStatement.setObject(3, request.getDateSettlement());
+            preparedStatement.setObject(4, request.getDateEviction());
+            preparedStatement.setObject(5, request.getUserFk());
+        }
     }
 
     @Override

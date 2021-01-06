@@ -2,6 +2,7 @@ package ua.model.entity;
 
 
 import ua.model.entity.enums.ApartmentClass;
+import ua.model.entity.enums.StatusRoom;
 
 import java.util.Objects;
 
@@ -10,13 +11,17 @@ public class Room {
     private Long seatsNumber;
     private ApartmentClass apartmentClass;
     private String apartmentName;
+    private double price;
+    private StatusRoom statusRoom;
 
 
-    public Room(Long ID, Long seatsNumber, ApartmentClass apartmentClass, String apartmentName) {
+    public Room(Long ID, Long seatsNumber, ApartmentClass apartmentClass, String apartmentName,double price,StatusRoom statusRoom) {
         this.ID = ID;
         this.seatsNumber = seatsNumber;
         this.apartmentClass = apartmentClass;
         this.apartmentName = apartmentName;
+        this.price = price;
+        this.statusRoom = statusRoom;
     }
 
     public Room() {
@@ -58,6 +63,22 @@ public class Room {
         this.apartmentName = apartmentName;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public StatusRoom getStatusRoom() {
+        return statusRoom;
+    }
+
+    public void setStatusRoom(StatusRoom statusRoom) {
+        this.statusRoom = statusRoom;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +107,8 @@ public class Room {
         private Long seatsNumber;
         private ApartmentClass apartmentClass;
         private String apartmentName;
+        private double price;
+        private StatusRoom statusRoom;
 
         public RoomBuilder() {
 
@@ -110,7 +133,19 @@ public class Room {
             this.apartmentName = apartmentName;
             return this;
         }
-        public Room build(){return new Room(ID,seatsNumber,apartmentClass,apartmentName);}
+
+        public RoomBuilder statusRoom(StatusRoom statusRoom)
+        {
+            this.statusRoom = statusRoom;
+            return this;
+        }
+
+        public RoomBuilder price (double price)
+        {
+            this.price = price;
+            return this;
+        }
+        public Room build(){return new Room(ID,seatsNumber,apartmentClass,apartmentName,price,statusRoom);}
         @Override
         public String toString() {
             return "RoomBuilder{" +

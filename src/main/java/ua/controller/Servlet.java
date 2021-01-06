@@ -3,6 +3,7 @@ package ua.controller;
 import ua.controller.command.*;
 import ua.controller.command.Exception;
 import ua.model.service.Impl.RequestServiceImpl;
+import ua.model.service.Impl.RoomServiceImpl;
 import ua.model.service.Impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ public class Servlet extends HttpServlet {
         commands.put("register",new RegisterUser(new UserServiceImpl()));
         commands.put("user/booking_request",new BookingRequest());
         commands.put("user/register_request",new RegisterRequest(new RequestServiceImpl()));
+        commands.put("rooms",new Rooms(new RoomServiceImpl()));
     }
 
     @Override

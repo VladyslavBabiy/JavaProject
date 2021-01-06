@@ -20,8 +20,8 @@
         <option value="Standard"><fmt:message key="booking.apartment_class.standard"/></option>
         <option value="Suite"><fmt:message key="booking.apartment_class.suite"/></option>
     </select>
-    <p><fmt:message key="booking.choose_date.settlement"/>: <input type="datetime-local" name="settlement">
-    <p><fmt:message key="booking.choose_date.eviction"/>: <input type="datetime-local" name="eviction">
+    <p><fmt:message key="booking.choose_date.settlement"/>: <input type="date" name="settlement">
+    <p><fmt:message key="booking.choose_date.eviction"/>: <input type="date" name="eviction">
         <input class="button" type="submit" value=<fmt:message key="booking.request"/>>
 </form>
 </body>

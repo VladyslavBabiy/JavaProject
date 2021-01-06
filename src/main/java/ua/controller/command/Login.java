@@ -36,6 +36,7 @@ public class Login implements Command {
             request.getSession().setAttribute("password", password);
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", role);
+            request.getSession().setAttribute("id",user.getId());
                 return moveToMenu(request, role);
         } else {
                 return moveToMenu(request, User.Role.Unknown);

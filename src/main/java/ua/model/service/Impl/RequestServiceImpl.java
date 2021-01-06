@@ -10,7 +10,6 @@ import java.util.Optional;
 public class RequestServiceImpl extends RequestService {
     @Override
     public void addRequest(RequestDTO requestDTO) {
-        System.out.println(requestDTO);
         requestDAO.add(BuildRequestDTOtoRequest(requestDTO));
     }
 
@@ -41,6 +40,7 @@ public class RequestServiceImpl extends RequestService {
                 .apartmentClass(requestDTO.getApartmentClass())
                 .dateEviction(requestDTO.getDateEviction())
                 .dateSettlement(requestDTO.getDateSettlement())
+                .userFk(requestDTO.getUserFk())
                 .build();
     }
 }
