@@ -15,5 +15,6 @@
 
 <h1>Hello ADMIN!</h1>
 <a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="logout"/></a>
+<jsp:include page="../templates/footer.jsp"></jsp:include>
 </body>
 </html>

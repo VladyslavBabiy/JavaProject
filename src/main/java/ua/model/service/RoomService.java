@@ -18,4 +18,8 @@ public abstract class RoomService {
     public abstract void update(RoomDTO roomDAO);
     public abstract void remove(RoomDTO roomDAO);
     public abstract List<Room> getAll();
+
+    public abstract List<Room> findRooms(int currentPage, int recordsPerPage);
+
+    public abstract Integer getNumberOfRows();
 }

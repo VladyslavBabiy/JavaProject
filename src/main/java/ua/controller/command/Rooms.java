@@ -2,7 +2,6 @@ package ua.controller.command;
 
 import ua.model.entity.Room;
 import ua.model.service.RoomService;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -15,11 +14,25 @@ public class Rooms implements Command{
     }
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
-        request.setAttribute("rooms",roomService.getAll());
-        List<Room> list = roomService.getAll();
-        for (Room room : list) {
-            System.out.println(room);
+        int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        int recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
+        List<Room> rooms = roomService.findRooms(currentPage,
+                recordsPerPage);
+
+        request.setAttribute("rooms",rooms );
+
+        int rows = roomService.getNumberOfRows();
+
+        int nOfPages = rows / recordsPerPage;
+
+        if (nOfPages % recordsPerPage > 0) {
+
+            nOfPages++;
         }
+
+        request.setAttribute("noOfPages", nOfPages);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("recordsPerPage", recordsPerPage);
         return "/view/rooms.jsp";
     }
 }

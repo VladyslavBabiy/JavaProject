@@ -48,7 +48,7 @@ public class JDBCRoomDAO implements RoomDAO {
     public List<Room> geAll()  {
         List<Room> roomList = new ArrayList<>();
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM room")) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM room")) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Room room = roomMapper.extractFromResultSet(resultSet);
@@ -146,5 +146,36 @@ public class JDBCRoomDAO implements RoomDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public List<Room> findRooms(int currentPage, int recordsPerPage) {
+        List<Room> roomList = new ArrayList<>();
+        int start = currentPage * recordsPerPage - recordsPerPage;
+        try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM room LIMIT ?,?")) {
+            preparedStatement.setInt(1,start);
+            preparedStatement.setInt(2,recordsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Room room = roomMapper.extractFromResultSet(resultSet);
+                roomList.add(room);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roomList;
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        try(Statement s = connection.createStatement()) {
+            ResultSet r = s.executeQuery("SELECT COUNT(*) AS rowcount FROM room");
+            r.next();
+            int count = r.getInt("rowcount");
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

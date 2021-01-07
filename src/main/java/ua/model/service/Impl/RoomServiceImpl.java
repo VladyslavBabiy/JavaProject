@@ -35,6 +35,16 @@ public class RoomServiceImpl extends RoomService {
         return roomDAO.geAll();
     }
 
+    @Override
+    public List<Room> findRooms(int currentPage, int recordsPerPage) {
+        return roomDAO.findRooms(currentPage,recordsPerPage);
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        return roomDAO.getNumberOfRows();
+    }
+
     public Room buildRoomDtoToRoom(RoomDTO roomDTO)
     {
         return Room.RoomBuilder()

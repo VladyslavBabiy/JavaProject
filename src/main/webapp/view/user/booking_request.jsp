@@ -24,5 +24,6 @@
     <p><fmt:message key="booking.choose_date.eviction"/>: <input type="date" name="eviction">
         <input class="button" type="submit" value=<fmt:message key="booking.request"/>>
 </form>
+<jsp:include page="../templates/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -17,5 +17,8 @@
 <a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="logout"/></a>
 <br>
 <a href="${pageContext.request.contextPath}/app/user/booking_request"><fmt:message key="booking"/> </a>
+<br>
+<a href="${pageContext.request.contextPath}/app/"><fmt:message key="booking"/> </a>
+<jsp:include page="../templates/footer.jsp"></jsp:include>
 </body>
 </html>

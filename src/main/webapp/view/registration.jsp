@@ -32,4 +32,5 @@
     <li><a href="?sessionLocale=uk"><fmt:message key="label.lang.uk"/></a></li>
 </ul>
 </body>
+<jsp:include page="templates/footer.jsp"></jsp:include>
 </html>
