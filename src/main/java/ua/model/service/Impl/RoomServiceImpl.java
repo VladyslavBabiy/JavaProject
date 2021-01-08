@@ -41,6 +41,11 @@ public class RoomServiceImpl extends RoomService {
     }
 
     @Override
+    public List<Room> findRooms(int currentPage, int recordsPerPage, String sql) {
+        return roomDAO.findRooms(currentPage,recordsPerPage,sql);
+    }
+
+    @Override
     public Integer getNumberOfRows() {
         return roomDAO.getNumberOfRows();
     }

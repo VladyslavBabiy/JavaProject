@@ -152,7 +152,7 @@ public class JDBCRoomDAO implements RoomDAO {
     public List<Room> findRooms(int currentPage, int recordsPerPage) {
         List<Room> roomList = new ArrayList<>();
         int start = currentPage * recordsPerPage - recordsPerPage;
-        try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM room LIMIT ?,?")) {
+        try(PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM room ORDER BY APARTMENT_CLASS LIMIT ?,?")) {
             preparedStatement.setInt(1,start);
             preparedStatement.setInt(2,recordsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -177,5 +177,23 @@ public class JDBCRoomDAO implements RoomDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public List<Room> findRooms(int currentPage, int recordsPerPage, String sql) {
+        List<Room> roomList = new ArrayList<>();
+        int start = currentPage * recordsPerPage - recordsPerPage;
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1,start);
+            preparedStatement.setInt(2,recordsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Room room = roomMapper.extractFromResultSet(resultSet);
+                roomList.add(room);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roomList;
     }
 }

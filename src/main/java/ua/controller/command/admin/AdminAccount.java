@@ -1,4 +1,6 @@
-package ua.controller.command;
+package ua.controller.command.admin;
+
+import ua.controller.command.Command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

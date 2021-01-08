@@ -10,4 +10,8 @@ public enum StatusRoom {
     {
         this.status = status;
     }
+
+    public int getStatus() {
+        return status;
+    }
 }

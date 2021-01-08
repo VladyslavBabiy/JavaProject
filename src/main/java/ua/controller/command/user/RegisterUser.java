@@ -1,5 +1,6 @@
-package ua.controller.command;
+package ua.controller.command.user;
 
+import ua.controller.command.Command;
 import ua.model.dto.UserDTO;
 import ua.model.exeption.AlreadyUsedName;
 import ua.model.service.Impl.UserServiceImpl;

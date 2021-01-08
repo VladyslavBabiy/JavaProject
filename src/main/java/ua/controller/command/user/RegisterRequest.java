@@ -1,5 +1,6 @@
-package ua.controller.command;
+package ua.controller.command.user;
 
+import ua.controller.command.Command;
 import ua.model.dto.RequestDTO;
 import ua.model.entity.enums.ApartmentClass;
 import ua.model.service.Impl.RequestServiceImpl;
@@ -39,7 +40,7 @@ public class RegisterRequest implements Command {
             request.setAttribute("constraintViolations", constraintViolations.stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList()));
-            return "/view/user/booking_request.jsp";
+            return "/view/user/booking_request_form.jsp";
         }
         requestService.addRequest(requestDTO);
         return "/view/user/user_account.jsp";

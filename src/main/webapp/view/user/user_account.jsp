@@ -17,8 +17,17 @@
 <a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="logout"/></a>
 <br>
 <a href="${pageContext.request.contextPath}/app/user/booking_request"><fmt:message key="booking"/> </a>
-<br>
-<a href="${pageContext.request.contextPath}/app/"><fmt:message key="booking"/> </a>
+
+
+
+<form action="${pageContext.request.contextPath}/app/user/rooms">
+
+    <input type="hidden" name="currentPage" value="1">
+    <input type="hidden" name="recordsPerPage" value="15">
+    <input type="hidden" name="sortedRooms" value="price">
+    <button type="submit" class="btn btn-primary">Отсортировать</button>
+</form>
+
 <jsp:include page="../templates/footer.jsp"></jsp:include>
 </body>
 </html>

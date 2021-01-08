@@ -20,6 +20,7 @@ public abstract class RoomService {
     public abstract List<Room> getAll();
 
     public abstract List<Room> findRooms(int currentPage, int recordsPerPage);
+    public abstract List<Room> findRooms(int currentPage, int recordsPerPage,String sql);
 
     public abstract Integer getNumberOfRows();
 }

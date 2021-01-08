@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hotel Rooms</title>
+    <title>Admin Request</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
@@ -16,12 +16,13 @@
     <div class="row col-md-6">
         <table class="table table-striped table-bordered table-sm">
             <tr>
-                <th>apartment name</th>
-                <th>apartment class</th>
-                <th>seats number</th>
-                <th>price</th>
-                <th>status room</th>
-                <th>Registration</th>
+                <th>Seats number</th>
+                <th>Apartment class</th>
+                <th>Date settlement</th>
+                <th>Date Eviction</th>
+                <th>User first name </th>
+                <th>User middle name</th>
+                <th>User last name</th>
             </tr>
             <tr>
                 <c:forEach var="room" items="${requestScope.get('rooms')}">

@@ -2,14 +2,19 @@ package ua.model.entity.enums;
 
 public enum ApartmentClass {
     //стандартная комната
-    Standard,
+    Standard(1),
     //номер со спальней
-    Bedroom,
+    Bedroom(2),
     //номер (больше чем стандартный) с гостиной и спальней, с мебелью и оборудованием высокого качества
-    Suite,
+    Suite(3),
     //такой же номер, но с более дорогой обстановкой
-    DeLuxe,
+    DeLuxe(4),
     //
-    Apartment;
+    Apartment(5);
+    private int apartmentClass;
+    ApartmentClass(int apartmentClass){this.apartmentClass = apartmentClass;}
 
+    public int getApartmentClass() {
+        return apartmentClass;
+    }
 }

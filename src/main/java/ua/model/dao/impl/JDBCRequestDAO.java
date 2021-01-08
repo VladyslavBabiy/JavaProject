@@ -1,13 +1,13 @@
 package ua.model.dao.impl;
 
-;
-
-
 import ua.model.dao.RequestDAO;
 import ua.model.dao.mapper.RequestMapper;
+import ua.model.dto.BookingRequestDTO;
 import ua.model.entity.Request;
+import ua.model.entity.enums.ApartmentClass;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -166,4 +166,34 @@ public class JDBCRequestDAO implements RequestDAO {
         }
     }
 
+    @Override
+    public List<BookingRequestDTO> getBookingRequestList() {
+        List<BookingRequestDTO> boolingList = new ArrayList<>();
+        try(Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM request INNER JOIN user ON request.USERFK = user.ID");
+            while (resultSet.next()) {
+                BookingRequestDTO request = createBookingRequestFromResultSet(resultSet);
+                boolingList.add(request);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return boolingList;
+    }
+
+    private BookingRequestDTO createBookingRequestFromResultSet(ResultSet resultSet) throws SQLException {
+        return BookingRequestDTO.builder()
+                .ID(resultSet.getLong("ID"))
+                .seats_number(resultSet.getLong("SEATS_NUMBER"))
+                .apartmentClass(ApartmentClass.valueOf(resultSet.getString("APARTMENT_CLASS")))
+                .dateEviction((LocalDate)resultSet.getObject("DATE_EVICTION"))
+                .dateSettlement((LocalDate) resultSet.getObject("DATE_SETTLEMENT"))
+                .userFk(resultSet.getLong("USERFK"))
+                .login(resultSet.getString("LOGIN"))
+                .email(resultSet.getString("EMAIL"))
+                .firs_name(resultSet.getString("FIRST_NAME"))
+                .middle_name(resultSet.getString("MIDDLE_NAME"))
+                .last_name(resultSet.getString("LAST_NAME"))
+                .build();
+    }
 }
