@@ -149,9 +149,9 @@ public class BookingRequestDTO {
                 ", userFk=" + userFk +
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
-                ", first_name='" + firstName + '\'' +
-                ", last_name='" + lastName + '\'' +
-                ", middle_name='" + middleName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
                 '}';
     }
 

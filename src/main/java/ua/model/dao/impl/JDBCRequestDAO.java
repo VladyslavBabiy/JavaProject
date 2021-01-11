@@ -14,7 +14,7 @@ public class JDBCRequestDAO implements RequestDAO {
     private RequestMapper requestMapper;
     private Connection connection;
     private final String add = "INSERT INTO request(SEATS_NUMBER, APARTMENT_CLASS,DATE_SETTLEMENT,DATE_EVICTION,USERFK, ID)value (?,?,?,?,?,DEFAULT)";
-
+    private final String getByIdBookingRequest = "SELECT * FROM request INNER JOIN user ON request.USERFK = user.ID WHERE ID = ?";
     public JDBCRequestDAO(Connection connection) {
         this.connection = connection;
         requestMapper = new RequestMapper();
@@ -158,17 +158,17 @@ public class JDBCRequestDAO implements RequestDAO {
 
     @Override
     public List<BookingRequestDTO> getBookingRequestList(int currentPage, int recordsPerPage, String sql) {
-        List<BookingRequestDTO> bookingList = new ArrayList<>();
+        List<BookingRequestDTO> boolingList = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM request INNER JOIN user ON request.USERFK = user.ID");
             while (resultSet.next()) {
                 BookingRequestDTO request = requestMapper.createBookingRequestFromResultSet(resultSet);
-                bookingList.add(request);
+                boolingList.add(request);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return bookingList;
+        return boolingList;
     }
 
     @Override
@@ -187,6 +187,20 @@ public class JDBCRequestDAO implements RequestDAO {
             e.printStackTrace();
         }
         return requests;
+    }
+
+    @Override
+    public Optional<BookingRequestDTO> getByIdBookingRequest(Long id) {
+        BookingRequestDTO bookingRequestDTO = null;
+        try( PreparedStatement  preparedStatement = connection.prepareStatement(getByIdBookingRequest)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            bookingRequestDTO = requestMapper.createBookingRequestFromResultSet(resultSet);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.of(bookingRequestDTO);
     }
 
     @Override

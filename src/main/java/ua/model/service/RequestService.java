@@ -26,5 +26,7 @@ public abstract class RequestService {
 
     public abstract Integer getNumberOfRows();
 
-    public abstract List<BookingRequestDTO> getBookingRequestList(int currentPage, int recordsPerPage, String Sql);
+    public abstract Optional<BookingRequestDTO> getByIdBookingRequest(Long id);
+
+    public abstract List<BookingRequestDTO> findRequests(int currentPage, int recordsPerPage, String Sql);
 }

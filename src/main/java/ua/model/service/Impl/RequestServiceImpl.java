@@ -41,8 +41,14 @@ public class RequestServiceImpl extends RequestService {
     }
 
     @Override
-    public List<BookingRequestDTO> getBookingRequestList(int currentPage, int recordsPerPage, String Sql) {
-        return requestDAO.getBookingRequestList(currentPage,recordsPerPage,Sql);
+    public Optional<BookingRequestDTO> getByIdBookingRequest(Long id) {
+        return requestDAO.getByIdBookingRequest(id);
+    }
+
+
+    @Override
+    public List<BookingRequestDTO> findRequests(int currentPage, int recordsPerPage, String Sql) {
+        return requestDAO.findRequests(currentPage,recordsPerPage,Sql);
     }
 
     private Request BuildRequestDTOtoRequest(RequestDTO requestDTO) {

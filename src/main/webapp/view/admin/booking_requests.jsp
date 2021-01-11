@@ -23,6 +23,7 @@
                 <th>User last name</th>
                 <th>Date settlement</th>
                 <th>Date eviction</th>
+                <th></th>
             </tr>
             <tr>
                 <c:forEach var="request" items="${requestScope.get('booking_requests')}">
@@ -34,11 +35,19 @@
                 <td>${request.lastName}</td>
                 <td>${request.dateSettlement}</td>
                 <td>${request.dateEviction}</td>
+            <td>
+                <form method="post" action="${pageContext.request.contextPath}/app/admin/choose_apartments">
+                    <input type="hidden" name="request" value="${request.ID}">
+                    <input type="hidden" name="currentPage" value="1">
+                    <input type="hidden" name="recordsPerPage" value="15">
+                    <input type="hidden" name="sortedRooms" value="price">
+                    <button type="submit" class="btn btn-primary">Подтвердить</button>
+                </form>
+            </td>
                 </c:forEach>
             </tr>
         </table>
     </div>
-
     <nav aria-label="Navigation for products">
         <ul class="pagination">
             <c:if test="${currentPage != 1}">
@@ -77,10 +86,8 @@
         <input type="hidden" name="recordsPerPage" value="15">
         <label for="sorted">Select records per page:</label>
         <select class="form-control" id="sorted" name="sortedRequest">
-            <option value="price">Price</option>
             <option value="class">Apartment class</option>
             <option value="seats">Seats number</option>
-            <option value="status">Status Room</option>
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

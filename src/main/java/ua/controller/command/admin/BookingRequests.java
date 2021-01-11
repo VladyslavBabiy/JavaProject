@@ -15,10 +15,9 @@ public class BookingRequests implements Command {
     public BookingRequests(RequestService requestService) {
         this.requestService = requestService;
     }
-
     public final static String PRICE_SQL = "SELECT  * FROM request ORDER BY PRICE LIMIT ?,?";
-    public final static String SEATS_SQL = "SELECT  * FROM request ORDER BY SEATS_NUMBER LIMIT ?,?";
-    public final static String APARTMENT_CLASS_SQL = "SELECT  * FROM request ORDER BY APARTMENT_CLASS LIMIT ?,?";
+    public final static String SEATS_SQL = "SELECT  * FROM request INNER JOIN user ON request.USERFK = user.ID ORDER BY SEATS_NUMBER LIMIT ?,?";
+    public final static String APARTMENT_CLASS_SQL = "SELECT  * FROM request INNER JOIN user ON request.USERFK = user.ID ORDER BY APARTMENT_CLASS LIMIT ?,?";
     public final static String STATUS = "SELECT  * FROM request ORDER BY STATUS_ROOM DESC LIMIT ?,?";
 
     @Override
@@ -28,17 +27,11 @@ public class BookingRequests implements Command {
         int recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
         List<BookingRequestDTO> requests = null;
         switch (sortedRequest) {
-            case "price":
-                requests = requestService.getBookingRequestList(currentPage, recordsPerPage, PRICE_SQL);
-                break;
             case "class":
-                requests = requestService.getBookingRequestList(currentPage, recordsPerPage, APARTMENT_CLASS_SQL);
+                requests = requestService.findRequests(currentPage, recordsPerPage, APARTMENT_CLASS_SQL);
                 break;
             case "seats":
-                requests = requestService.getBookingRequestList(currentPage, recordsPerPage, SEATS_SQL);
-                break;
-            case "status":
-                requests = requestService.getBookingRequestList(currentPage, recordsPerPage, STATUS);
+                requests = requestService.findRequests(currentPage, recordsPerPage, SEATS_SQL);
                 break;
         }
         request.setAttribute("booking_requests", requests);
