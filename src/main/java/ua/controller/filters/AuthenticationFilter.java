@@ -1,4 +1,5 @@
 package ua.controller.filters;
+
 import ua.model.entity.User;
 
 import javax.servlet.*;
@@ -24,13 +25,13 @@ public class AuthenticationFilter implements Filter {
         User.Role userRole = User.Role.valueOf(userRoleAsString);
         if (pathUrl.contains("admin") && userRole == User.Role.Admin) {
             filterChain.doFilter(servletRequest, servletResponse);
-        }
-        else if (pathUrl.contains("user") && userRole == User.Role.User) {
+        } else if (pathUrl.contains("user") && userRole == User.Role.User) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             ((HttpServletResponse) servletResponse).sendRedirect("/app/login");
         }
     }
+
     @Override
     public void destroy() {
 

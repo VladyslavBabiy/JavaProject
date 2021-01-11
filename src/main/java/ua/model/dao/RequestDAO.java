@@ -7,5 +7,9 @@ import java.util.List;
 
 
 public interface RequestDAO extends GenericDAO<Request> {
-    public abstract List<BookingRequestDTO> getBookingRequestList();
+    List<BookingRequestDTO> getBookingRequestList(int currentPage, int recordsPerPage, String sql);
+
+    List<BookingRequestDTO> findRequests(int currentPage, int recordsPerPage, String sql);
+
+    Integer getNumberOfRows();
 }

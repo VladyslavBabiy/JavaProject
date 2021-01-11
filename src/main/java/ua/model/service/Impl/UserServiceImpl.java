@@ -16,8 +16,7 @@ public class UserServiceImpl extends UserService {
         if (userDao.findByLogin(userDTO.getLogin()).isPresent()) {
             throw new AlreadyUsedName("Login " + userDTO.toString() + " already exists in system;");
         }
-        if (userDao.findByEmail(userDTO.getEmail()).isPresent())
-        {
+        if (userDao.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new AlreadyUsedEmail("Email " + userDTO.toString() + " already exists in system;");
         }
 

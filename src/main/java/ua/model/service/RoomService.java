@@ -13,14 +13,18 @@ import java.util.Optional;
 
 public abstract class RoomService {
     protected final RoomDAO roomDAO = DaoFactory.getInstance().createRoomDAO();
+
     public abstract void addRoom(RoomDTO roomDTO);
+
     public abstract Optional<Room> getById(Long id);
+
     public abstract void update(RoomDTO roomDAO);
+
     public abstract void remove(RoomDTO roomDAO);
+
     public abstract List<Room> getAll();
 
-    public abstract List<Room> findRooms(int currentPage, int recordsPerPage);
-    public abstract List<Room> findRooms(int currentPage, int recordsPerPage,String sql);
+    public abstract List<Room> findRooms(int currentPage, int recordsPerPage, String sql);
 
     public abstract Integer getNumberOfRows();
 }

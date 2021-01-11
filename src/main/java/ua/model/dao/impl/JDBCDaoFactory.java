@@ -15,8 +15,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class JDBCDaoFactory  extends DaoFactory {
+public class JDBCDaoFactory extends DaoFactory {
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
+
     @Override
     public UserDAO createUserDAO() {
         return new JDBCUserDAO(getConnection());
@@ -31,11 +32,12 @@ public class JDBCDaoFactory  extends DaoFactory {
     public RoomDAO createRoomDAO() {
         return new JDBCRoomDAO(getConnection());
     }
+
     public Connection getConnection1() {
         FileInputStream fis;
         Properties property = new Properties();
         Connection connection = null;
-        try{
+        try {
             fis = new FileInputStream("/home/vlad/IdeaProjects/HotelProject/src/main/resources/config.properties");
             property.load(fis);
 
@@ -54,8 +56,8 @@ public class JDBCDaoFactory  extends DaoFactory {
         }
         return connection;
     }
-    public Connection getConnection ()
-    {
+
+    public Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {

@@ -12,7 +12,10 @@ public enum ApartmentClass {
     //
     Apartment(5);
     private int apartmentClass;
-    ApartmentClass(int apartmentClass){this.apartmentClass = apartmentClass;}
+
+    ApartmentClass(int apartmentClass) {
+        this.apartmentClass = apartmentClass;
+    }
 
     public int getApartmentClass() {
         return apartmentClass;

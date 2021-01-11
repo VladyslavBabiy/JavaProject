@@ -181,7 +181,7 @@ public class User {
         }
 
         public User build() {
-            return new User(id, login, password, role, email,first_name,last_name,middle_name);
+            return new User(id, login, password, role, email, first_name, last_name, middle_name);
         }
 
         @Override

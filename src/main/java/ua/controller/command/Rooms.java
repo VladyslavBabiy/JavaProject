@@ -10,10 +10,10 @@ import java.util.List;
 
 public class Rooms implements Command {
     private RoomService roomService;
-    public final static String PRICE_SQL="SELECT  * FROM room ORDER BY PRICE LIMIT ?,?";
-    public final static String SEATS_SQL="SELECT  * FROM room ORDER BY SEATS_NUMBER LIMIT ?,?";
-    public final static String APARTMENT_CLASS_SQL="SELECT  * FROM room ORDER BY APARTMENT_CLASS LIMIT ?,?";
-    public final static String STATUS="SELECT  * FROM room ORDER BY STATUS_ROOM DESC LIMIT ?,?";
+    public final static String PRICE_SQL = "SELECT  * FROM room ORDER BY PRICE LIMIT ?,?";
+    public final static String SEATS_SQL = "SELECT  * FROM room ORDER BY SEATS_NUMBER LIMIT ?,?";
+    public final static String APARTMENT_CLASS_SQL = "SELECT  * FROM room ORDER BY APARTMENT_CLASS LIMIT ?,?";
+    public final static String STATUS = "SELECT  * FROM room ORDER BY STATUS_ROOM DESC LIMIT ?,?";
 
     public Rooms(RoomService roomService) {
         this.roomService = roomService;
@@ -27,19 +27,19 @@ public class Rooms implements Command {
         List<Room> rooms = null;
         switch (sortedRooms) {
             case "price":
-                rooms = roomService.findRooms(currentPage,recordsPerPage,PRICE_SQL);
+                rooms = roomService.findRooms(currentPage, recordsPerPage, PRICE_SQL);
                 System.out.println(rooms);
                 break;
             case "class":
-                rooms = roomService.findRooms(currentPage,recordsPerPage,APARTMENT_CLASS_SQL);
+                rooms = roomService.findRooms(currentPage, recordsPerPage, APARTMENT_CLASS_SQL);
                 System.out.println(rooms);
                 break;
             case "seats":
-                rooms = roomService.findRooms(currentPage,recordsPerPage,SEATS_SQL);
+                rooms = roomService.findRooms(currentPage, recordsPerPage, SEATS_SQL);
                 System.out.println(rooms);
                 break;
             case "status":
-                rooms = roomService.findRooms(currentPage,recordsPerPage,STATUS);
+                rooms = roomService.findRooms(currentPage, recordsPerPage, STATUS);
                 System.out.println(rooms);
                 break;
         }

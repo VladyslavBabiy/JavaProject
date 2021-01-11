@@ -36,13 +36,8 @@ public class RoomServiceImpl extends RoomService {
     }
 
     @Override
-    public List<Room> findRooms(int currentPage, int recordsPerPage) {
-        return roomDAO.findRooms(currentPage,recordsPerPage);
-    }
-
-    @Override
     public List<Room> findRooms(int currentPage, int recordsPerPage, String sql) {
-        return roomDAO.findRooms(currentPage,recordsPerPage,sql);
+        return roomDAO.findRooms(currentPage, recordsPerPage, sql);
     }
 
     @Override
@@ -50,8 +45,7 @@ public class RoomServiceImpl extends RoomService {
         return roomDAO.getNumberOfRows();
     }
 
-    public Room buildRoomDtoToRoom(RoomDTO roomDTO)
-    {
+    public Room buildRoomDtoToRoom(RoomDTO roomDTO) {
         return Room.RoomBuilder()
                 .apartmentClass(roomDTO.getApartmentClass())
                 .apartmentName(roomDTO.getApartmentName())

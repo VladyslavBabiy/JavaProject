@@ -1,6 +1,7 @@
 package ua.model.dto;
 
 import ua.model.entity.enums.ApartmentClass;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -13,12 +14,12 @@ public class BookingRequestDTO {
     private Long userFk;
     private String login;
     private String email;
-    private String first_name;
-    private String last_name;
-    private String middle_name;
+    private String firstName;
+    private String lastName;
+    private String middleName;
 
     public BookingRequestDTO(Long ID, Long seatsNumber, ApartmentClass apartmentClass, LocalDate dateSettlement, LocalDate dateEviction,
-                             Long userFk, String login, String email, String first_name, String middle_name, String last_name) {
+                             Long userFk, String login, String email, String firstName, String middleName, String lastName) {
         this.ID = ID;
         this.seatsNumber = seatsNumber;
         this.apartmentClass = apartmentClass;
@@ -27,11 +28,14 @@ public class BookingRequestDTO {
         this.userFk = userFk;
         this.login = login;
         this.email = email;
-        this.first_name = first_name;
-        this.middle_name = middle_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
     }
-    public static BookingRequestDTOBuilder builder(){return new BookingRequestDTOBuilder();}
+
+    public static BookingRequestDTOBuilder builder() {
+        return new BookingRequestDTOBuilder();
+    }
 
     public Long getID() {
         return ID;
@@ -88,6 +92,7 @@ public class BookingRequestDTO {
     public void setLogin(String login) {
         this.login = login;
     }
+
     public String getEmail() {
         return email;
     }
@@ -96,28 +101,28 @@ public class BookingRequestDTO {
         this.email = email;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getMiddle_name() {
-        return middle_name;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setMiddle_name(String middle_name) {
-        this.middle_name = middle_name;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     @Override
@@ -125,12 +130,12 @@ public class BookingRequestDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookingRequestDTO that = (BookingRequestDTO) o;
-        return Objects.equals(ID, that.ID) && Objects.equals(seatsNumber, that.seatsNumber) && apartmentClass == that.apartmentClass && Objects.equals(dateSettlement, that.dateSettlement) && Objects.equals(dateEviction, that.dateEviction) && Objects.equals(userFk, that.userFk) && Objects.equals(login, that.login) && Objects.equals(email, that.email) && Objects.equals(first_name, that.first_name) && Objects.equals(last_name, that.last_name) && Objects.equals(middle_name, that.middle_name);
+        return Objects.equals(ID, that.ID) && Objects.equals(seatsNumber, that.seatsNumber) && apartmentClass == that.apartmentClass && Objects.equals(dateSettlement, that.dateSettlement) && Objects.equals(dateEviction, that.dateEviction) && Objects.equals(userFk, that.userFk) && Objects.equals(login, that.login) && Objects.equals(email, that.email) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(middleName, that.middleName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, seatsNumber, apartmentClass, dateSettlement, dateEviction, userFk, login, email, first_name, last_name, middle_name);
+        return Objects.hash(ID, seatsNumber, apartmentClass, dateSettlement, dateEviction, userFk, login, email, firstName, lastName, middleName);
     }
 
     @Override
@@ -144,14 +149,13 @@ public class BookingRequestDTO {
                 ", userFk=" + userFk +
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", middle_name='" + middle_name + '\'' +
+                ", first_name='" + firstName + '\'' +
+                ", last_name='" + lastName + '\'' +
+                ", middle_name='" + middleName + '\'' +
                 '}';
     }
 
-    public static class BookingRequestDTOBuilder
-    {
+    public static class BookingRequestDTOBuilder {
         private Long ID;
         private Long seatsNumber;
         private ApartmentClass apartmentClass;
@@ -163,39 +167,40 @@ public class BookingRequestDTO {
         private String first_name;
         private String last_name;
         private String middle_name;
-        public BookingRequestDTOBuilder()
-        {
+
+        public BookingRequestDTOBuilder() {
         }
-        public BookingRequestDTOBuilder ID(Long ID)
-        {
+
+        public BookingRequestDTOBuilder ID(Long ID) {
             this.ID = ID;
             return this;
         }
-        public BookingRequestDTOBuilder seats_number(Long seatsNumber)
-        {
+
+        public BookingRequestDTOBuilder seats_number(Long seatsNumber) {
             this.seatsNumber = seatsNumber;
             return this;
         }
-        public BookingRequestDTOBuilder apartmentClass(ApartmentClass apartmentClass)
-        {
+
+        public BookingRequestDTOBuilder apartmentClass(ApartmentClass apartmentClass) {
             this.apartmentClass = apartmentClass;
             return this;
         }
-        public BookingRequestDTOBuilder dateSettlement (LocalDate dateSettlement)
-        {
+
+        public BookingRequestDTOBuilder dateSettlement(LocalDate dateSettlement) {
             this.dateSettlement = dateSettlement;
             return this;
         }
-        public BookingRequestDTOBuilder  dateEviction (LocalDate dateEviction)
-        {
+
+        public BookingRequestDTOBuilder dateEviction(LocalDate dateEviction) {
             this.dateEviction = dateEviction;
             return this;
         }
-        public BookingRequestDTOBuilder  userFk(Long userFk)
-        {
+
+        public BookingRequestDTOBuilder userFk(Long userFk) {
             this.userFk = userFk;
             return this;
         }
+
         public BookingRequestDTOBuilder login(String login) {
             this.login = login;
             return this;
@@ -221,8 +226,11 @@ public class BookingRequestDTO {
             this.middle_name = middle_name;
             return this;
         }
-        public BookingRequestDTO build(){return new BookingRequestDTO(ID,seatsNumber,apartmentClass,dateSettlement,dateEviction,
-                userFk,login,email,first_name,middle_name,last_name);}
+
+        public BookingRequestDTO build() {
+            return new BookingRequestDTO(ID, seatsNumber, apartmentClass, dateSettlement, dateEviction,
+                    userFk, login, email, first_name, middle_name, last_name);
+        }
 
         @Override
         public String toString() {

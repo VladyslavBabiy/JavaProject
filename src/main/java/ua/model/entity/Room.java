@@ -15,7 +15,7 @@ public class Room {
     private StatusRoom statusRoom;
 
 
-    public Room(Long ID, Long seatsNumber, ApartmentClass apartmentClass, String apartmentName,double price,StatusRoom statusRoom) {
+    public Room(Long ID, Long seatsNumber, ApartmentClass apartmentClass, String apartmentName, double price, StatusRoom statusRoom) {
         this.ID = ID;
         this.seatsNumber = seatsNumber;
         this.apartmentClass = apartmentClass;
@@ -28,9 +28,10 @@ public class Room {
 
     }
 
-    public static RoomBuilder RoomBuilder (){
+    public static RoomBuilder RoomBuilder() {
         return new RoomBuilder();
     }
+
     public Long getID() {
         return ID;
     }
@@ -134,18 +135,20 @@ public class Room {
             return this;
         }
 
-        public RoomBuilder statusRoom(StatusRoom statusRoom)
-        {
+        public RoomBuilder statusRoom(StatusRoom statusRoom) {
             this.statusRoom = statusRoom;
             return this;
         }
 
-        public RoomBuilder price (double price)
-        {
+        public RoomBuilder price(double price) {
             this.price = price;
             return this;
         }
-        public Room build(){return new Room(ID,seatsNumber,apartmentClass,apartmentName,price,statusRoom);}
+
+        public Room build() {
+            return new Room(ID, seatsNumber, apartmentClass, apartmentName, price, statusRoom);
+        }
+
         @Override
         public String toString() {
             return "RoomBuilder{" +

@@ -19,7 +19,6 @@
 <a href="${pageContext.request.contextPath}/app/user/booking_request"><fmt:message key="booking"/> </a>
 
 
-
 <form action="${pageContext.request.contextPath}/app/user/rooms">
 
     <input type="hidden" name="currentPage" value="1">

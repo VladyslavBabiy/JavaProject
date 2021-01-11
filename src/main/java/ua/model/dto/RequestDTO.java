@@ -15,7 +15,8 @@ public class RequestDTO {
     @Future
     private LocalDate dateEviction;
     private Long userFk;
-    public RequestDTO(Long seatsNumber, ApartmentClass apartmentClass, LocalDate dateSettlement, LocalDate dateEviction,Long userFk) {
+
+    public RequestDTO(Long seatsNumber, ApartmentClass apartmentClass, LocalDate dateSettlement, LocalDate dateEviction, Long userFk) {
         this.seatsNumber = seatsNumber;
         this.apartmentClass = apartmentClass;
         this.dateSettlement = dateSettlement;
@@ -23,7 +24,9 @@ public class RequestDTO {
         this.userFk = userFk;
     }
 
-    public static RequestDTOBuilder builder (){return new RequestDTOBuilder();}
+    public static RequestDTOBuilder builder() {
+        return new RequestDTOBuilder();
+    }
 
     public Long getSeatsNumber() {
         return seatsNumber;
@@ -87,8 +90,8 @@ public class RequestDTO {
                 ", dateEviction=" + dateEviction +
                 '}';
     }
-    public static class RequestDTOBuilder
-    {
+
+    public static class RequestDTOBuilder {
         private Long seatsNumber;
         private ApartmentClass apartmentClass;
         private LocalDate dateSettlement;
@@ -97,32 +100,35 @@ public class RequestDTO {
 
         public RequestDTOBuilder() {
         }
-        public RequestDTOBuilder seats_number(Long seatsNumber)
-        {
+
+        public RequestDTOBuilder seats_number(Long seatsNumber) {
             this.seatsNumber = seatsNumber;
             return this;
         }
-        public RequestDTOBuilder apartmentClass(ApartmentClass apartmentClass)
-        {
+
+        public RequestDTOBuilder apartmentClass(ApartmentClass apartmentClass) {
             this.apartmentClass = apartmentClass;
             return this;
         }
-        public RequestDTOBuilder dateSettlement (LocalDate dateSettlement)
-        {
+
+        public RequestDTOBuilder dateSettlement(LocalDate dateSettlement) {
             this.dateSettlement = dateSettlement;
             return this;
         }
-        public RequestDTOBuilder dateEviction (LocalDate dateEviction)
-        {
+
+        public RequestDTOBuilder dateEviction(LocalDate dateEviction) {
             this.dateEviction = dateEviction;
             return this;
         }
-        public RequestDTOBuilder userFk(Long userFk)
-        {
+
+        public RequestDTOBuilder userFk(Long userFk) {
             this.userFk = userFk;
             return this;
         }
-        public RequestDTO build (){return new RequestDTO(seatsNumber,apartmentClass,dateSettlement,dateEviction,userFk);}
+
+        public RequestDTO build() {
+            return new RequestDTO(seatsNumber, apartmentClass, dateSettlement, dateEviction, userFk);
+        }
 
         @Override
         public String toString() {

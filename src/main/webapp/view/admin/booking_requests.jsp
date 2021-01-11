@@ -18,37 +18,22 @@
             <tr>
                 <th>Seats number</th>
                 <th>Apartment class</th>
-                <th>Date settlement</th>
-                <th>Date Eviction</th>
-                <th>User first name </th>
+                <th>User first name</th>
                 <th>User middle name</th>
                 <th>User last name</th>
+                <th>Date settlement</th>
+                <th>Date eviction</th>
             </tr>
             <tr>
-                <c:forEach var="room" items="${requestScope.get('rooms')}">
+                <c:forEach var="request" items="${requestScope.get('booking_requests')}">
             <tr>
-                <td>${room.apartmentName}</td>
-                <td>${room.apartmentClass}</td>
-                <td>${room.seatsNumber}</td>
-                <td>${room.price}</td>
-                <td>${room.statusRoom}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${room.statusRoom=='free'}">
-
-                            <form action="${pageContext.request.contextPath}/app/user/rooms">
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
-                            </form>
-                        </c:when>
-                    </c:choose>
-
-                </td>
+                <td>${request.seatsNumber}</td>
+                <td>${request.apartmentClass}</td>
+                <td>${request.firstName}</td>
+                <td>${request.middleName}</td>
+                <td>${request.lastName}</td>
+                <td>${request.dateSettlement}</td>
+                <td>${request.dateEviction}</td>
                 </c:forEach>
             </tr>
         </table>
@@ -58,7 +43,7 @@
         <ul class="pagination">
             <c:if test="${currentPage != 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="rooms?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&sortedRooms=${sortedRooms}">Previous</a>
+                                         href="booking_request?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&sortedRequest=${sortedRequest}">Previous</a>
                 </li>
             </c:if>
 
@@ -71,7 +56,7 @@
                     </c:when>
                     <c:otherwise>
                         <li class="page-item"><a class="page-link"
-                                                 href="rooms?recordsPerPage=${recordsPerPage}&currentPage=${i}&sortedRooms=${sortedRooms}">${i}</a>
+                                                 href="booking_request?recordsPerPage=${recordsPerPage}&currentPage=${i}&sortedRequest=${sortedRequest}">${i}</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
@@ -79,19 +64,19 @@
 
             <c:if test="${currentPage lt noOfPages}">
                 <li class="page-item"><a class="page-link"
-                                         href="rooms?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&sortedRooms=${sortedRooms}">Next</a>
+                                         href="booking_request?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&sortedRequest=${sortedRequest}">Next</a>
                 </li>
             </c:if>
         </ul>
     </nav>
 </main>
 
-<form action="${pageContext.request.contextPath}/app/user/rooms">
+<form action="${pageContext.request.contextPath}/app/admin/booking_request">
     <input type="hidden" name="currentPage" value=${currentPage}>
     <div class="form-group col-md-4">
         <input type="hidden" name="recordsPerPage" value="15">
         <label for="sorted">Select records per page:</label>
-        <select class="form-control" id="sorted" name="sortedRooms">
+        <select class="form-control" id="sorted" name="sortedRequest">
             <option value="price">Price</option>
             <option value="class">Apartment class</option>
             <option value="seats">Seats number</option>
@@ -101,7 +86,6 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
-
-<jsp:include page="templates/footer.jsp"></jsp:include>
+<jsp:include page="../templates/footer.jsp"></jsp:include>
 </body>
 </html>

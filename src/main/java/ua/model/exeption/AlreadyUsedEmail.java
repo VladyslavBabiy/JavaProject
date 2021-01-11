@@ -1,15 +1,15 @@
 package ua.model.exeption;
 
 public class AlreadyUsedEmail extends RuntimeException {
-    AlreadyUsedEmail(){
+    AlreadyUsedEmail() {
         super();
     }
-    public AlreadyUsedEmail(String message)
-    {
+
+    public AlreadyUsedEmail(String message) {
         super(message);
     }
-    AlreadyUsedEmail(String message, Throwable cause)
-    {
-        super(message,cause);
+
+    AlreadyUsedEmail(String message, Throwable cause) {
+        super(message, cause);
     }
 }

@@ -20,10 +20,11 @@ import java.util.stream.Collectors;
 
 public class RegisterRequest implements Command {
     RequestService requestService;
-    public RegisterRequest (RequestServiceImpl requestService)
-    {
+
+    public RegisterRequest(RequestServiceImpl requestService) {
         this.requestService = requestService;
     }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         RequestDTO requestDTO = RequestDTO.builder()
@@ -31,7 +32,7 @@ public class RegisterRequest implements Command {
                 .apartmentClass(ApartmentClass.valueOf(request.getParameter("apartment_class")))
                 .dateEviction(LocalDate.parse(request.getParameter("eviction")))
                 .dateSettlement(LocalDate.parse(request.getParameter("settlement")))
-                .userFk((Long)request.getSession().getAttribute("id"))
+                .userFk((Long) request.getSession().getAttribute("id"))
                 .build();
         Validator validator = Validation.
                 buildDefaultValidatorFactory().getValidator();

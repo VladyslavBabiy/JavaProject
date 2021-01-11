@@ -18,7 +18,7 @@ public class Request {
     public Request() {
     }
 
-    public Request(Long id, Long seatsNumber, ApartmentClass apartmentClass, LocalDate dateSettlement, LocalDate dateEviction,Long userFk) {
+    public Request(Long id, Long seatsNumber, ApartmentClass apartmentClass, LocalDate dateSettlement, LocalDate dateEviction, Long userFk) {
         this.id = id;
         this.seats_number = seatsNumber;
         this.apartmentClass = apartmentClass;
@@ -26,7 +26,10 @@ public class Request {
         this.dateEviction = dateEviction;
         this.userFk = userFk;
     }
-    public static RequestBuilder builder (){return new RequestBuilder();}
+
+    public static RequestBuilder builder() {
+        return new RequestBuilder();
+    }
 
     public Long getId() {
         return id;
@@ -99,8 +102,8 @@ public class Request {
                 ", date_eviction=" + dateEviction +
                 '}';
     }
-    public static class RequestBuilder
-    {
+
+    public static class RequestBuilder {
         private Long id;
         private Long seats_number;
         private ApartmentClass apartmentClass;
@@ -111,38 +114,39 @@ public class Request {
         public RequestBuilder() {
         }
 
-        public RequestBuilder ID (Long id)
-        {
+        public RequestBuilder ID(Long id) {
             this.id = id;
             return this;
         }
 
-        public RequestBuilder seats_number(Long seats_number)
-        {
+        public RequestBuilder seats_number(Long seats_number) {
             this.seats_number = seats_number;
             return this;
         }
-        public RequestBuilder apartmentClass(ApartmentClass apartmentClass)
-        {
+
+        public RequestBuilder apartmentClass(ApartmentClass apartmentClass) {
             this.apartmentClass = apartmentClass;
             return this;
         }
-        public RequestBuilder dateSettlement (LocalDate dateSettlement)
-        {
+
+        public RequestBuilder dateSettlement(LocalDate dateSettlement) {
             this.dateSettlement = dateSettlement;
             return this;
         }
-        public RequestBuilder dateEviction (LocalDate dateEviction)
-        {
+
+        public RequestBuilder dateEviction(LocalDate dateEviction) {
             this.dateEviction = dateEviction;
             return this;
         }
-        public RequestBuilder userFk(Long userFk)
-        {
-            this.userFk=userFk;
+
+        public RequestBuilder userFk(Long userFk) {
+            this.userFk = userFk;
             return this;
         }
-        public Request build (){return new Request(id,seats_number,apartmentClass,dateSettlement,dateEviction,userFk);}
+
+        public Request build() {
+            return new Request(id, seats_number, apartmentClass, dateSettlement, dateEviction, userFk);
+        }
 
         @Override
         public String toString() {

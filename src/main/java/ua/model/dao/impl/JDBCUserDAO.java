@@ -14,13 +14,15 @@ public class JDBCUserDAO implements UserDAO {
     private UserMapper userMapper;
     private Connection connection;
     private final String add = "INSERT INTO user(LOGIN,PASSWORD,ROLE,EMAIL,FIRST_NAME,MIDDLE_NAME,LAST_NAME,ID)value (?,?,?,?,?,?,?,DEFAULT)";
+
     public JDBCUserDAO(Connection connection) {
         this.connection = connection;
         userMapper = new UserMapper();
     }
+
     @Override
     public void add(User user) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(add);){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(add);) {
             preparedStatementSet(user, preparedStatement, true);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

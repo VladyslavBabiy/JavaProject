@@ -4,10 +4,8 @@ import ua.model.dao.RequestDAO;
 import ua.model.dao.mapper.RequestMapper;
 import ua.model.dto.BookingRequestDTO;
 import ua.model.entity.Request;
-import ua.model.entity.enums.ApartmentClass;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +21,9 @@ public class JDBCRequestDAO implements RequestDAO {
     }
 
     @Override
-    public void add(Request request){
-        try (PreparedStatement preparedStatement = connection.prepareStatement(add)){
-            preparedStatementSet(request, preparedStatement,true);
+    public void add(Request request) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(add)) {
+            preparedStatementSet(request, preparedStatement, true);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,8 +55,7 @@ public class JDBCRequestDAO implements RequestDAO {
                 if (connection != null) {
                     connection.close();
                 }
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -85,9 +82,7 @@ public class JDBCRequestDAO implements RequestDAO {
                 if (connection != null) {
                     connection.close();
                 }
-            }
-            catch (SQLException e)
-            {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -100,7 +95,7 @@ public class JDBCRequestDAO implements RequestDAO {
         try {
             preparedStatement = connection.prepareStatement("UPDATE REQUEST SET SEATS_NUMBER=?, APARTMENT_CLASS=?, DATE_SETTLEMENT=?, DATE_EVICTION=? WHERE ID=?");
 
-            preparedStatementSet(request, preparedStatement,false);
+            preparedStatementSet(request, preparedStatement, false);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -113,24 +108,21 @@ public class JDBCRequestDAO implements RequestDAO {
                 if (connection != null) {
                     connection.close();
                 }
-            }
-            catch (SQLException e)
-            {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void preparedStatementSet(Request request, PreparedStatement preparedStatement,boolean add) throws SQLException {
-        if (!add){
+    private void preparedStatementSet(Request request, PreparedStatement preparedStatement, boolean add) throws SQLException {
+        if (!add) {
             preparedStatement.setLong(1, request.getSeats_number());
             preparedStatement.setString(2, String.valueOf(request.getApartmentClass()));
             preparedStatement.setObject(3, request.getDateSettlement());
             preparedStatement.setObject(4, request.getDateEviction());
             preparedStatement.setObject(5, request.getUserFk());
             preparedStatement.setLong(6, request.getId());
-        }
-        else {
+        } else {
             preparedStatement.setLong(1, request.getSeats_number());
             preparedStatement.setString(2, String.valueOf(request.getApartmentClass()));
             preparedStatement.setObject(3, request.getDateSettlement());
@@ -158,42 +150,56 @@ public class JDBCRequestDAO implements RequestDAO {
                 if (connection != null) {
                     connection.close();
                 }
-            }
-            catch (SQLException e)
-            {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
     @Override
-    public List<BookingRequestDTO> getBookingRequestList() {
-        List<BookingRequestDTO> boolingList = new ArrayList<>();
-        try(Statement statement = connection.createStatement()) {
+    public List<BookingRequestDTO> getBookingRequestList(int currentPage, int recordsPerPage, String sql) {
+        List<BookingRequestDTO> bookingList = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM request INNER JOIN user ON request.USERFK = user.ID");
             while (resultSet.next()) {
-                BookingRequestDTO request = createBookingRequestFromResultSet(resultSet);
-                boolingList.add(request);
+                BookingRequestDTO request = requestMapper.createBookingRequestFromResultSet(resultSet);
+                bookingList.add(request);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return boolingList;
+        return bookingList;
     }
 
-    private BookingRequestDTO createBookingRequestFromResultSet(ResultSet resultSet) throws SQLException {
-        return BookingRequestDTO.builder()
-                .ID(resultSet.getLong("ID"))
-                .seats_number(resultSet.getLong("SEATS_NUMBER"))
-                .apartmentClass(ApartmentClass.valueOf(resultSet.getString("APARTMENT_CLASS")))
-                .dateEviction((LocalDate)resultSet.getObject("DATE_EVICTION"))
-                .dateSettlement((LocalDate) resultSet.getObject("DATE_SETTLEMENT"))
-                .userFk(resultSet.getLong("USERFK"))
-                .login(resultSet.getString("LOGIN"))
-                .email(resultSet.getString("EMAIL"))
-                .firs_name(resultSet.getString("FIRST_NAME"))
-                .middle_name(resultSet.getString("MIDDLE_NAME"))
-                .last_name(resultSet.getString("LAST_NAME"))
-                .build();
+    @Override
+    public List<BookingRequestDTO> findRequests(int currentPage, int recordsPerPage, String sql) {
+        List<BookingRequestDTO> requests = new ArrayList<>();
+        int start = currentPage * recordsPerPage - recordsPerPage;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, start);
+            preparedStatement.setInt(2, recordsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                BookingRequestDTO bookingRequestDTO = requestMapper.createBookingRequestFromResultSet(resultSet);
+                requests.add(bookingRequestDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return requests;
     }
+
+    @Override
+    public Integer getNumberOfRows() {
+        try (Statement s = connection.createStatement()) {
+            ResultSet r = s.executeQuery("SELECT COUNT(*) AS rowcount FROM request");
+            r.next();
+            int count = r.getInt("rowcount");
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

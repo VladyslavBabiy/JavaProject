@@ -25,7 +25,7 @@
     <input type="submit" value=<fmt:message key="form.register"/>>
 </form>
 <br>
-<p><fmt:message key="registration.registered"/> </p>
+<p><fmt:message key="registration.registered"/></p>
 <a href="${pageContext.request.contextPath}/app/login"> <fmt:message key="form.login"/> </a>
 <ul>
     <li><a href="?sessionLocale=en"><fmt:message key="label.lang.en"/></a></li>

@@ -11,7 +11,8 @@
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/app/user/register_request" method="post">
-    <input type="text" required placeholder=<fmt:message key="booking.apartment_seats_number"/> name="seats_number"><br>
+    <input type="text" required placeholder=
+    <fmt:message key="booking.apartment_seats_number"/> name="seats_number"><br>
     <label for="apartment_class"><fmt:message key="booking.choose_apartment"/>:</label>
     <select id="apartment_class" name="apartment_class">
         <option value="Apartment"><fmt:message key="booking.apartment_class.apartment"/></option>

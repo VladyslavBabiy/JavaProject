@@ -6,8 +6,8 @@ public enum StatusRoom {
     busy(3),
     unavailable(4);
     private int status;
-    StatusRoom(int status)
-    {
+
+    StatusRoom(int status) {
         this.status = status;
     }
 

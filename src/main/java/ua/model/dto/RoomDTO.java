@@ -12,7 +12,7 @@ public class RoomDTO {
     private double price;
     private StatusRoom statusRoom;
 
-    public RoomDTO(Long seatsNumber, ApartmentClass apartmentClass, String apartmentName,double price, StatusRoom statusRoom) {
+    public RoomDTO(Long seatsNumber, ApartmentClass apartmentClass, String apartmentName, double price, StatusRoom statusRoom) {
         this.seatsNumber = seatsNumber;
         this.apartmentClass = apartmentClass;
         this.apartmentName = apartmentName;
@@ -85,40 +85,41 @@ public class RoomDTO {
                 '}';
     }
 
-    public static class RoomDTOBuilder
-    {
+    public static class RoomDTOBuilder {
         private Long seatsNumber;
         private ApartmentClass apartmentClass;
         private String apartmentName;
         private StatusRoom statusRoom;
         private double price;
 
-        public RoomDTOBuilder seatsNumber(Long seatsNumber)
-        {
+        public RoomDTOBuilder seatsNumber(Long seatsNumber) {
             this.seatsNumber = seatsNumber;
             return this;
         }
-        public RoomDTOBuilder apartmentClass (ApartmentClass apartmentClass)
-        {
+
+        public RoomDTOBuilder apartmentClass(ApartmentClass apartmentClass) {
             this.apartmentClass = apartmentClass;
             return this;
         }
-        public RoomDTOBuilder apartmentName(String apartmentName)
-        {
+
+        public RoomDTOBuilder apartmentName(String apartmentName) {
             this.apartmentName = apartmentName;
             return this;
         }
-        public RoomDTOBuilder statusRoom (StatusRoom statusRoom)
-        {
+
+        public RoomDTOBuilder statusRoom(StatusRoom statusRoom) {
             this.statusRoom = statusRoom;
             return this;
         }
-        public RoomDTOBuilder price (double price)
-        {
+
+        public RoomDTOBuilder price(double price) {
             this.price = price;
             return this;
         }
-        public RoomDTO build(){return new RoomDTO(seatsNumber,apartmentClass,apartmentName,price,statusRoom);}
+
+        public RoomDTO build() {
+            return new RoomDTO(seatsNumber, apartmentClass, apartmentName, price, statusRoom);
+        }
 
         @Override
         public String toString() {

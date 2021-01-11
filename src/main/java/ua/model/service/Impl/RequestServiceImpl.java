@@ -1,5 +1,6 @@
 package ua.model.service.Impl;
 
+import ua.model.dto.BookingRequestDTO;
 import ua.model.dto.RequestDTO;
 import ua.model.entity.Request;
 import ua.model.service.RequestService;
@@ -33,8 +34,18 @@ public class RequestServiceImpl extends RequestService {
         return requestDAO.geAll();
     }
 
-    private Request BuildRequestDTOtoRequest(RequestDTO requestDTO)
-    {
+
+    @Override
+    public Integer getNumberOfRows() {
+        return requestDAO.getNumberOfRows();
+    }
+
+    @Override
+    public List<BookingRequestDTO> getBookingRequestList(int currentPage, int recordsPerPage, String Sql) {
+        return requestDAO.getBookingRequestList(currentPage,recordsPerPage,Sql);
+    }
+
+    private Request BuildRequestDTOtoRequest(RequestDTO requestDTO) {
         return Request.builder()
                 .seats_number(requestDTO.getSeatsNumber())
                 .apartmentClass(requestDTO.getApartmentClass())

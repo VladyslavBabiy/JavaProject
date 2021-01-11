@@ -24,23 +24,23 @@
                 <th>Registration</th>
             </tr>
             <tr>
-                <c:forEach var="room" items="${requestScope.get('rooms')}">
+                <c:forEach var="request" items="${requestScope.get('rooms')}">
             <tr>
-                <td>${room.apartmentName}</td>
-                <td>${room.apartmentClass}</td>
-                <td>${room.seatsNumber}</td>
-                <td>${room.price}</td>
-                <td>${room.statusRoom}</td>
+                <td>${request.apartmentName}</td>
+                <td>${request.apartmentClass}</td>
+                <td>${request.seatsNumber}</td>
+                <td>${request.price}</td>
+                <td>${request.statusRoom}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${room.statusRoom=='free'}">
+                        <c:when test="${request.statusRoom=='free'}">
 
                             <form action="${pageContext.request.contextPath}/app/user/rooms">
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
-                                <input type="hidden" name="apartmentName" value=${room.apartmentName}>
+                                <input type="hidden" name="apartmentName" value=${request.apartmentName}>
+                                <input type="hidden" name="apartmentName" value=${request.apartmentName}>
+                                <input type="hidden" name="apartmentName" value=${request.apartmentName}>
+                                <input type="hidden" name="apartmentName" value=${request.apartmentName}>
+                                <input type="hidden" name="apartmentName" value=${request.apartmentName}>
                                 <button type="submit" class="btn btn-primary">Submit</button>
 
                             </form>

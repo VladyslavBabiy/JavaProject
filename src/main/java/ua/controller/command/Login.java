@@ -13,9 +13,11 @@ import static java.util.Objects.nonNull;
 
 public class Login implements Command {
     UserService userService;
+
     public Login(UserService userService) {
         this.userService = userService;
     }
+
     @Override
     public String execute(HttpServletRequest request) throws ServletException, IOException {
         final String login = request.getParameter("login");
@@ -29,22 +31,21 @@ public class Login implements Command {
             return moveToMenu(request, role);
         }
         User user = userService.findByLogin(login).orElse(new User());
-        if (nonNull(user.getLogin())&&nonNull(user.getPassword())
-                &&user.getPassword().equals(password)&&user.getLogin().equals(login))
-        {
+        if (nonNull(user.getLogin()) && nonNull(user.getPassword())
+                && user.getPassword().equals(password) && user.getLogin().equals(login)) {
             final User.Role role = user.getRole();
             request.getSession().setAttribute("password", password);
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("role", role);
-            request.getSession().setAttribute("id",user.getId());
-                return moveToMenu(request, role);
+            request.getSession().setAttribute("id", user.getId());
+            return moveToMenu(request, role);
         } else {
-                return moveToMenu(request, User.Role.Unknown);
+            return moveToMenu(request, User.Role.Unknown);
         }
     }
 
     private String moveToMenu(final HttpServletRequest req,
-                            final User.Role role)
+                              final User.Role role)
             throws ServletException, IOException {
         if (role.equals(User.Role.Admin)) {
 

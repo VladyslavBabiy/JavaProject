@@ -15,6 +15,12 @@
 
 <h1>Hello ADMIN!</h1>
 <a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="logout"/></a>
+<form action="${pageContext.request.contextPath}/app/admin/booking_request">
+    <input type="hidden" name="currentPage" value="1">
+    <input type="hidden" name="recordsPerPage" value="15">
+    <input type="hidden" name="sortedRequest" value="seats">
+    <button type="submit" class="btn btn-primary">Заявки</button>
+</form>
 <jsp:include page="../templates/footer.jsp"></jsp:include>
 </body>
 </html>
