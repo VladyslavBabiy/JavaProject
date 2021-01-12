@@ -1,5 +1,11 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<%@ page session="true" %>
+
+<fmt:setLocale value="${lang}" scope="session"/>
+<fmt:setBundle basename="messages"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,12 +22,12 @@
     <div class="row col-md-6">
         <table class="table table-striped table-bordered table-sm">
             <tr>
-                <th>apartment name</th>
-                <th>apartment class</th>
-                <th>seats number</th>
-                <th>price</th>
-                <th>status room</th>
-                <th>Registration</th>
+                <th><fmt:message key="rooms.apartment_name"/></th>
+                <th><fmt:message key="rooms.apartment_class"/></th>
+                <th><fmt:message key="rooms.seats"/></th>
+                <th><fmt:message key="rooms.price"/> </th>
+                <th><fmt:message key="rooms.status"/></th>
+                <th><fmt:message key="rooms.registration"/> </th>
             </tr>
             <tr>
                 <c:forEach var="room" items="${requestScope.get('rooms')}">
@@ -57,7 +63,7 @@
         <ul class="pagination">
             <c:if test="${currentPage != 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="rooms?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&sortedRooms=${sortedRooms}">Previous</a>
+                                         href="rooms?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&sortedRooms=${sortedRooms}"><fmt:message key="previous"/> </a>
                 </li>
             </c:if>
 
@@ -78,7 +84,7 @@
 
             <c:if test="${currentPage lt noOfPages}">
                 <li class="page-item"><a class="page-link"
-                                         href="rooms?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&sortedRooms=${sortedRooms}">Next</a>
+                                         href="rooms?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&sortedRooms=${sortedRooms}"><fmt:message key="next"/> </a>
                 </li>
             </c:if>
         </ul>
@@ -91,16 +97,19 @@
         <input type="hidden" name="recordsPerPage" value="15">
         <label for="sorted">Select records per page:</label>
         <select class="form-control" id="sorted" name="sortedRooms">
-            <option value="price">Price</option>
-            <option value="class">Apartment class</option>
-            <option value="seats">Seats number</option>
-            <option value="status">Status Room</option>
+            <option value="price"><fmt:message key="rooms.price"/> </option>
+            <option value="class"><fmt:message key="rooms.apartment_class"/> </option>
+            <option value="seats"><fmt:message key="rooms.seats"/> </option>
+            <option value="status"><fmt:message key="rooms.status"/> </option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-
+    <button type="submit" class="btn btn-primary"><fmt:message key="sort"/></button>
 </form>
-
+<br>
+<ul>
+    <li><a href="?sessionLocale=en&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}&sortedRooms=${sortedRooms}"><fmt:message key="label.lang.en"/></a></li>
+    <li><a href="?sessionLocale=uk&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}&sortedRooms=${sortedRooms}"><fmt:message key="label.lang.uk"/></a></li>
+</ul>
 <jsp:include page="templates/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -14,7 +14,6 @@ public class JDBCRequestDAO implements RequestDAO {
     private RequestMapper requestMapper;
     private Connection connection;
     private final String add = "INSERT INTO request(SEATS_NUMBER, APARTMENT_CLASS,DATE_SETTLEMENT,DATE_EVICTION,USERFK, ID)value (?,?,?,?,?,DEFAULT)";
-    private final String getByIdBookingRequest = "SELECT * FROM request INNER JOIN user ON request.USERFK = user.ID WHERE ID = ?";
     public JDBCRequestDAO(Connection connection) {
         this.connection = connection;
         requestMapper = new RequestMapper();
@@ -191,12 +190,17 @@ public class JDBCRequestDAO implements RequestDAO {
 
     @Override
     public Optional<BookingRequestDTO> getByIdBookingRequest(Long id) {
+        String getByIdBookingRequest = "SELECT request.ID as ID, SEATS_NUMBER, APARTMENT_CLASS, DATE_SETTLEMENT, DATE_EVICTION, USERFK,\n" +
+                "       LOGIN, PASSWORD, ROLE, EMAIL, FIRST_NAME, LAST_NAME, MIDDLE_NAME FROM request,user\n" +
+                "where USERFK = user.ID and request.ID = ?";
         BookingRequestDTO bookingRequestDTO = null;
-        try( PreparedStatement  preparedStatement = connection.prepareStatement(getByIdBookingRequest)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            bookingRequestDTO = requestMapper.createBookingRequestFromResultSet(resultSet);
-            preparedStatement.executeUpdate();
+        try( PreparedStatement  ps = connection.prepareStatement(getByIdBookingRequest)) {
+            ps.setLong(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next())
+            {
+                bookingRequestDTO = requestMapper.createBookingRequestFromResultSet(resultSet);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

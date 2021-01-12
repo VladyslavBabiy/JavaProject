@@ -1,10 +1,7 @@
 package ua.model.dao.impl;
 
 
-import ua.model.dao.DaoFactory;
-import ua.model.dao.RequestDAO;
-import ua.model.dao.RoomDAO;
-import ua.model.dao.UserDAO;
+import ua.model.dao.*;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
@@ -33,29 +30,11 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCRoomDAO(getConnection());
     }
 
-    public Connection getConnection1() {
-        FileInputStream fis;
-        Properties property = new Properties();
-        Connection connection = null;
-        try {
-            fis = new FileInputStream("/home/vlad/IdeaProjects/HotelProject/src/main/resources/config.properties");
-            property.load(fis);
-
-            String DB_DRIVER = property.getProperty("db.driver");
-            String DB_USERNAME = property.getProperty("db.username");
-            String DB_URL = property.getProperty("db.url");
-            String DB_PASSWORD = property.getProperty("db.password");
-            Class.forName(DB_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
+    @Override
+    public BookingDAO createBookingDAO() {
+        return new JDBCBookingDAO(getConnection());
     }
+
 
     public Connection getConnection() {
         try {

@@ -5,7 +5,9 @@ import ua.controller.command.Exception;
 import ua.controller.command.admin.AdminAccount;
 import ua.controller.command.admin.BookingRequests;
 import ua.controller.command.admin.ChooseApartment;
+import ua.controller.command.admin.ReservationRequest;
 import ua.controller.command.user.*;
+import ua.model.service.Impl.BookingServiceImpl;
 import ua.model.service.Impl.RequestServiceImpl;
 import ua.model.service.Impl.RoomServiceImpl;
 import ua.model.service.Impl.UserServiceImpl;
@@ -32,6 +34,8 @@ public class Servlet extends HttpServlet {
         commands.put("user/rooms", new Rooms(new RoomServiceImpl()));
         commands.put("admin/booking_request", new BookingRequests(new RequestServiceImpl()));
         commands.put("admin/choose_apartments",new ChooseApartment(new RoomServiceImpl(),new RequestServiceImpl()));
+        commands.put("admin/reservation_request",new ReservationRequest(new BookingServiceImpl()));
+        commands.put("user/pay_booking",new PayBooking());
     }
 
     @Override

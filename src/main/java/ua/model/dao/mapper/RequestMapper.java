@@ -36,8 +36,4 @@ public class RequestMapper implements ObjectMapper<Request> {
                 .last_name(resultSet.getString("LAST_NAME"))
                 .build();
     }
-    @Override
-    public Request makeUnique(Map<Integer, Request> cache, Request teacher) {
-        return null;
-    }
 }

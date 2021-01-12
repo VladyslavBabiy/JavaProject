@@ -22,8 +22,4 @@ public class UserMapper implements ObjectMapper<User> {
                 .last_name(resultSet.getString("LAST_NAME"))
                 .build();
     }
-    @Override
-    public User makeUnique(Map<Integer, User> cache, User teacher) {
-        return null;
-    }
 }

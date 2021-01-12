@@ -20,9 +20,4 @@ public class RoomMapper implements ObjectMapper<Room> {
         room.setPrice(resultSet.getDouble("PRICE"));
         return room;
     }
-
-    @Override
-    public Room makeUnique(Map<Integer, Room> cache, Room teacher) {
-        return null;
-    }
 }

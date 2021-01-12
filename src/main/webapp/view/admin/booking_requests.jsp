@@ -1,5 +1,11 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<%@ page session="true" %>
+
+<fmt:setLocale value="${lang}" scope="session"/>
+<fmt:setBundle basename="messages"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,15 +20,15 @@
 
 <main class="m-3">
     <div class="row col-md-6">
-        <table class="table table-striped table-bordered table-sm">
+        <table class="table table-striped table-bordered table-sm" align="right">
             <tr>
-                <th>Seats number</th>
-                <th>Apartment class</th>
-                <th>User first name</th>
-                <th>User middle name</th>
-                <th>User last name</th>
-                <th>Date settlement</th>
-                <th>Date eviction</th>
+                <th><fmt:message key="rooms.seats"/></th>
+                <th><fmt:message key="rooms.apartment_class"/></th>
+                <th><fmt:message key="form.name"/> </th>
+                <th><fmt:message key="form.patronymic"/> </th>
+                <th><fmt:message key="form.surname"/></th>
+                <th><fmt:message key="booking.date.settlement"/> </th>
+                <th><fmt:message key="booking.date.eviction"/> </th>
                 <th></th>
             </tr>
             <tr>
@@ -41,7 +47,7 @@
                     <input type="hidden" name="currentPage" value="1">
                     <input type="hidden" name="recordsPerPage" value="15">
                     <input type="hidden" name="sortedRooms" value="price">
-                    <button type="submit" class="btn btn-primary">Подтвердить</button>
+                    <button type="submit" class="btn btn-primary"><fmt:message key="booking.confirm"/></button>
                 </form>
             </td>
                 </c:forEach>
@@ -52,7 +58,7 @@
         <ul class="pagination">
             <c:if test="${currentPage != 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="booking_request?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&sortedRequest=${sortedRequest}">Previous</a>
+                                         href="booking_request?recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}&sortedRequest=${sortedRequest}"><fmt:message key="previous"/> </a>
                 </li>
             </c:if>
 
@@ -73,7 +79,7 @@
 
             <c:if test="${currentPage lt noOfPages}">
                 <li class="page-item"><a class="page-link"
-                                         href="booking_request?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&sortedRequest=${sortedRequest}">Next</a>
+                                         href="booking_request?recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}&sortedRequest=${sortedRequest}"><fmt:message key="next"/> </a>
                 </li>
             </c:if>
         </ul>
@@ -86,13 +92,17 @@
         <input type="hidden" name="recordsPerPage" value="15">
         <label for="sorted">Select records per page:</label>
         <select class="form-control" id="sorted" name="sortedRequest">
-            <option value="class">Apartment class</option>
-            <option value="seats">Seats number</option>
+            <option value="class"><fmt:message key="rooms.apartment_class"/> </option>
+            <option value="seats"><fmt:message key="rooms.seats"/></option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-
+    <button type="submit" class="btn btn-primary"><fmt:message key="sort"/></button>
 </form>
+<br>
+<ul>
+    <li><a href="?sessionLocale=en&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}&sortedRequest=${sortedRequest}"><fmt:message key="label.lang.en"/></a></li>
+    <li><a href="?sessionLocale=uk&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}&sortedRequest=${sortedRequest}"><fmt:message key="label.lang.uk"/></a></li>
+</ul>
 <jsp:include page="../templates/footer.jsp"></jsp:include>
 </body>
 </html>

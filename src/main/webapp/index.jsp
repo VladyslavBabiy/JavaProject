@@ -21,16 +21,6 @@
 <br/>
 <a href="${pageContext.request.contextPath}/app/registration"><fmt:message key="index.registration"/> </a>
 <br>
-<a href="${pageContext.request.contextPath}/app/exception"><fmt:message key="index.exception"/> </a>
-<h2>
-    <fmt:message key="index.chooseRequestLocale"/>
-</h2>
-<p>
-    <fmt:message key="index.requestLocaleContent"/>
-</p>
-<p>
-    <fmt:message key="index.changeLang"/>
-</p>
 <ul>
     <li><a href="?sessionLocale=en"><fmt:message key="label.lang.en"/></a></li>
     <li><a href="?sessionLocale=uk"><fmt:message key="label.lang.uk"/></a></li>

@@ -18,7 +18,6 @@ public class ChooseApartment implements Command {
     public final static String PRICE_SQL = "SELECT  * FROM room ORDER BY PRICE LIMIT ?,?";
     public final static String SEATS_SQL = "SELECT  * FROM room ORDER BY SEATS_NUMBER LIMIT ?,?";
     public final static String APARTMENT_CLASS_SQL = "SELECT  * FROM room ORDER BY APARTMENT_CLASS LIMIT ?,?";
-    public final static String STATUS = "SELECT  * FROM room ORDER BY STATUS_ROOM DESC LIMIT ?,?";
 
     public ChooseApartment(RoomService roomService, RequestService requestService) {
         this.roomService = roomService;
@@ -41,9 +40,6 @@ public class ChooseApartment implements Command {
                 break;
             case "seats":
                 rooms = roomService.findRooms(currentPage, recordsPerPage, SEATS_SQL);
-                break;
-            case "status":
-                rooms = roomService.findRooms(currentPage, recordsPerPage, STATUS);
                 break;
         }
         request.setAttribute("rooms", rooms);
